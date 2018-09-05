@@ -60,6 +60,7 @@ namespace BankObj
         {
             // id generieren
             int tId = 0;
+            //Kredit beim zustaendigen Berater einlisten
             this.Adv.Kredite.Add(new Kredit(tId, betrag,0, laufzeitMonate, start,0,"wartend"));
         }
     }

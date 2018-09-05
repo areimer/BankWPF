@@ -33,7 +33,12 @@ namespace BankObj
             this.Zinssatz = zinssatz;
             this.StartDatum = start;
             this.Tilgungsrate = tilgung;
-            this.status = stat;
+            this.Status = stat;
+        }
+
+        public override string ToString()
+        {
+            return "Kredit "+Id+": "+Betrag+"Euro über "+LaufzeitMonate+" zu "+Zinssatz+"%.\n"+"Startdatum: "+StartDatum+", Tilgungsrate: "+Tilgungsrate+"--"+Status;
         }
     }
 }
