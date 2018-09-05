@@ -40,12 +40,11 @@ namespace BankObj
 
         public void KreditVergeben(int kreditId, Boolean genehmigt)
         {
-            //finde Kredit2 in Kreditliste mit id=kredit.id
+            //finde Kredit in Kreditliste mit id=kredit.id
             // lege Zinssatz fest
             double zins=0.2;
             //lege Tilgung fest
             double tilgung=20.5;
-            //wenn genehm==true, Kredit2.status=genehmigt 
                 for (int i = 0; i < this.Kredite.Count(); i++)
                 {
                 if (Kredite[i].Id == kreditId)
