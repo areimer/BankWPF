@@ -56,6 +56,7 @@ namespace BankObj
             this.Adv = b;
         }
 
+        //GKunde fordert Kredit an und legt ihn als "wartend" bei seinem Berater ab
         public void KreditAnfordern(long betrag, int laufzeitMonate, DateTimeOffset start)
         {
             // id generieren

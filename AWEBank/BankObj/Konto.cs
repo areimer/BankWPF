@@ -23,6 +23,8 @@ namespace BankObj
             this.kontostand = 0;
         }
 
+        //Transaktion einlisten
+        //erlaubte Transaktionen "ein", "aus", "uber"
         public void TransaktionTaetigen(String art, long betrag)
         {
             transaktionen.Add(new Transaktion(betrag, art));
