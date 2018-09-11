@@ -19,16 +19,15 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0">Neuen User anlegen</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0">Name</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="CustomerNameBox"/>
-        <TextBlock Grid.Row="2" Grid.Column="0">Alter</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="CustomerAgeBox"/>
-        <TextBlock Grid.Row="3" Grid.Column="0">Berater</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Name="CustomerAdvisorBox"/>
-        <TextBlock Grid.Row="4" Grid.Column="0">Nur für Geschäftskunden !</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="0">Bonität</TextBlock>
-        <CheckBox Grid.Row="5" Grid.Column="1" Name="CustomerBoniBox"/>
-        <Button Grid.Row="6" Grid.Column="1" Name="CustomerCreationSaveButton">Speichern</Button>
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="26">Name</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="CustomerNameBox"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="26">Alter</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="CustomerAgeBox"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" FontSize="26">Berater</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="CustomerAdvisorBox"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" FontSize="28">Nur für Geschäftskunden !</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="26">Bonität</TextBlock>
+        <CheckBox Grid.Row="4" Grid.Column="1" Name="CustomerBoniBox"/>
+        <Button Grid.Row="5" Grid.Column="1" Name="CustomerCreationSaveButton" FontSize="30">Speichern</Button>
     </Grid>
 </UserControl>
