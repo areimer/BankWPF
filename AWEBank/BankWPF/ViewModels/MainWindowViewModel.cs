@@ -32,37 +32,33 @@ namespace BankWPF.ViewModels
 
         /* MainWindow Konstruktor */
         public MainWindowViewModel()
-        {      
-            /*
-            ClickTeamsCommand = new ActionCommand(loadTeamView, _ => Content is MainMenu);
-            ClickGroupCommand = new ActionCommand(loadGroupView, _ => Content is MainMenu);
-            ClickPlanCommand = new ActionCommand(loadPlanView, _ => Content is MainMenu);
-            ClickTipCommand = new ActionCommand(loadTipView, _ => Content is MainMenu);
-            BackToMain = new ActionCommand(_ => Content = new MainMenu(), _ => !(Content is MainMenu));
-            */
+        {
+
+            // ClickTeamsCommand = new ActionCommand(loadTeamView, _ => Content is MainView);
+            ClickGroupCommand = new ActionCommand(loadKundenUebersichtView, _ => Content is MainView);
+            ClickPlanCommand = new ActionCommand(loadBeraterView, _ => Content is MainView);
+            ClickTipCommand = new ActionCommand(loadBeraterUebersichtView, _ => Content is MainView);
+            BackToMain = new ActionCommand(_ => Content = new MainView(), _ => !(Content is MainView));
+
             Path = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\Background.png";
         }
 
-        /* Lädt die Teamübersicht in den Content 
-        public void loadTeamView(Object param)
+        // Lädt die Übersicht in den Content 
+
+        public void loadKundenUebersichtView(Object param)
         {
-            Content = new TeamView();
+            Content = new KundenUebersichtView();
         }
-        /* Lädt die Gruppenansicht in den Content 
-        public void loadGroupView(Object param)
+       
+        public void loadBeraterView(Object param)
         {
-            Content = new GroupView();
+            Content = new BeraterView();
         }
-        /* Lädt den Spielplan in den Content 
-        public void loadPlanView(Object param)
+       
+        public void loadBeraterUebersichtView(Object param)
         {
-            Content = new PlanView();
+            Content = new BeraterUebersichtView();
         }
-        /* Lädt den Tipper in den Content 
-        public void loadTipView(Object param)
-        {
-            Content = new TipView();
-        }
-        */
+
     }
 }
