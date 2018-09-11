@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Name="btnTeam" Grid.Row="0" Grid.Column="0" Content="Kunde anlegen" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickTeamsCommand}"/>
+            <Button Name="btnTeam" Grid.Row="0" Grid.Column="0" Content="Kunde anlegen" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickCustomerCreationCommand}"/>
             <Button Name="btnGroup" Grid.Row="0" Grid.Column="1" Content="Berater anlegen" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickGroupCommand}"/>
             <Button Name="btnPlan" Grid.Row="1" Grid.Column="0" Content="Beraterbereich" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickPlanCommand}"/>
             <Button Name="btntTip" Grid.Row="1" Grid.Column="1" Content="Kundenbereich" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickTipCommand}"/>

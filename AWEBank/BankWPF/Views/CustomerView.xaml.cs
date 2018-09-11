@@ -17,7 +17,7 @@ namespace BankWPF.Views
     /// <summary>
     /// Interaktionslogik für CustomerView.xaml
     /// </summary>
-    public partial class CustomerView : Window
+    public partial class CustomerView : UserControl
     {
         public CustomerView()
         {

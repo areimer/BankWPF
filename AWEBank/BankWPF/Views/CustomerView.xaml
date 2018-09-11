@@ -1,13 +1,15 @@
-﻿<Window x:Class="BankWPF.Views.CustomerView"
+﻿<UserControl x:Class="BankWPF.Views.CustomerView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWPF.Views"
         mc:Ignorable="d"
-        Title="CustomerView" Height="300" Width="300">
+>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -22,5 +24,11 @@
         <TextBox Grid.Row="1" Grid.Column="1" Name="CustomerNameBox"/>
         <TextBlock Grid.Row="2" Grid.Column="0">Alter</TextBlock>
         <TextBox Grid.Row="2" Grid.Column="1" Name="CustomerAgeBox"/>
+        <TextBlock Grid.Row="3" Grid.Column="0">Berater</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="CustomerAdvisorBox"/>
+        <TextBlock Grid.Row="4" Grid.Column="0">Nur für Geschäftskunden !</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0">Bonität</TextBlock>
+        <CheckBox Grid.Row="5" Grid.Column="1" Name="CustomerBoniBox"/>
+        <Button Grid.Row="6" Grid.Column="1" Name="CustomerCreationSaveButton">Speichern</Button>
     </Grid>
-</Window>
+</UserControl>
