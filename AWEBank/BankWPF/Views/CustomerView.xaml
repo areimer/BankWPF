@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="BankWPF.Views.CustomerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankWPF.Views"
+        mc:Ignorable="d"
+>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="26">Name</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" FontSize="26" Name="CustomerNameBox"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="26">Alter</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" FontSize="26" Name="CustomerAgeBox"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" FontSize="26">Berater</TextBlock>
+        <Menu Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <MenuItem Header="Berater" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <MenuItem Header="Hier könnte ihr Berater stehen"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <!-- <TextBox Grid.Row="2" Grid.Column="1"  FontSize="26" Name="CustomerAdvisorBox"/> -->
+        <TextBlock Grid.Row="3" Grid.Column="0" FontSize="26">Geschäftskunde</TextBlock>
+        <CheckBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
+        <TextBlock Grid.Row="4" Grid.Column="0" Width="323" FontSize="26" HorizontalAlignment="Left">Bonität</TextBlock>
+        <CheckBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBoniBox"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Name="customerMessageBox" Text="Keine Ereignisse"></TextBlock>
+        <Button Grid.Row="5" Grid.Column="1" Name="CustomerCreationSaveButton" FontSize="30" Click="CustomerCreationSaveButton_Click">Speichern</Button>
+    </Grid>
+</UserControl>
