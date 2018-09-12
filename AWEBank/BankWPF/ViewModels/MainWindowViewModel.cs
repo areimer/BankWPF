@@ -32,22 +32,6 @@ namespace BankWPF.ViewModels
 
         /* MainWindow Konstruktor */
         public MainWindowViewModel()
-<<<<<<< HEAD
-        {
-
-            // ClickTeamsCommand = new ActionCommand(loadTeamView, _ => Content is MainView);
-            ClickGroupCommand = new ActionCommand(loadKundenUebersichtView, _ => Content is MainView);
-            ClickPlanCommand = new ActionCommand(loadBeraterView, _ => Content is MainView);
-            ClickTipCommand = new ActionCommand(loadBeraterUebersichtView, _ => Content is MainView);
-            BackToMain = new ActionCommand(_ => Content = new MainView(), _ => !(Content is MainView));
-
-            Path = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\Background.png";
-        }
-
-        // Lädt die Übersicht in den Content 
-
-        public void loadKundenUebersichtView(Object param)
-=======
         {      
             
             ClickCustomerCreationCommand = new ActionCommand(loadTeamView, _ => Content is MainView);
@@ -67,20 +51,19 @@ namespace BankWPF.ViewModels
         }
         /* Lädt die Gruppenansicht in den Content 
         public void loadGroupView(Object param)
->>>>>>> b5e93b5bd53464a07a1d43ee7eaeab4223240ed9
         {
-            Content = new KundenUebersichtView();
+            Content = new GroupView();
         }
-       
-        public void loadBeraterView(Object param)
+        /* Lädt den Spielplan in den Content 
+        public void loadPlanView(Object param)
         {
-            Content = new BeraterView();
+            Content = new PlanView();
         }
-       
-        public void loadBeraterUebersichtView(Object param)
+        /* Lädt den Tipper in den Content 
+        public void loadTipView(Object param)
         {
-            Content = new BeraterUebersichtView();
+            Content = new TipView();
         }
-
+        */
     }
 }

@@ -12,8 +12,6 @@ namespace BankObj
         long Betrag { get; set; }
         String art;
         String Art { get; set; }
-        DateTimeOffset zeit;
-        DateTimeOffset Zeit { get; set; }
 
         public Transaktion(long betrag, String art)
         {

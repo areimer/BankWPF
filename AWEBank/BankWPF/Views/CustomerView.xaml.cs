@@ -42,14 +42,14 @@ namespace BankWPF.Views
                 if (CustomerBoniBox.IsChecked == true) { cboni = true; }else { cboni = false; } //Auswertung Bonitaet Checkbox
 
                 newGKunde = new GKunde(cnr, CustomerNameBox.Text, cage, cboni, new Konto(), newGAdvisor);
-                customerMessageBox.Text = newGKunde.ToString() + " angelegt";
+                customerMessageBox.Text = newGKunde.ToString();
             }
             else
             {
                 int cnr = 666; //naechste freie KDNR waehlen
                 int cage = Convert.ToInt32(CustomerAgeBox.Text); //Falscheingaben abfangen
                 newKunde = new Kunde(cnr, CustomerNameBox.Text, cage, new Konto(42)); //KontoID im Konto-Constructor automatisch
-                customerMessageBox.Text = newKunde.ToString()+" angelegt";
+                customerMessageBox.Text = newKunde.ToString();
             }
         }
     }

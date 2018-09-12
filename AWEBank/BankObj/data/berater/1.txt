@@ -1,2 +1,0 @@
-﻿!ID;NAME;FILIALE;GK
-1;Peter Lustig;Woodstock;false

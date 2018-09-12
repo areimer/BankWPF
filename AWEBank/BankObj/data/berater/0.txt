@@ -1,2 +1,0 @@
-﻿!ID;NAME;FILIALE;GK
-0;Gustav Geldgeil;Ostholstein;true
