@@ -17,7 +17,7 @@ namespace BankWPF.ViewModels
         /* MainWindow Properties */
         private UIElement _content = new MainView();
         public string Path { get; private set; }
-        public ICommand ClickTeamsCommand { get; set; }
+        public ICommand ClickCustomerCreationCommand { get; set; }
         public ICommand ClickGroupCommand { get; set; }
         public ICommand ClickPlanCommand { get; set; }
         public ICommand ClickTipCommand { get; set; }
@@ -32,6 +32,7 @@ namespace BankWPF.ViewModels
 
         /* MainWindow Konstruktor */
         public MainWindowViewModel()
+<<<<<<< HEAD
         {
 
             // ClickTeamsCommand = new ActionCommand(loadTeamView, _ => Content is MainView);
@@ -46,6 +47,27 @@ namespace BankWPF.ViewModels
         // Lädt die Übersicht in den Content 
 
         public void loadKundenUebersichtView(Object param)
+=======
+        {      
+            
+            ClickCustomerCreationCommand = new ActionCommand(loadTeamView, _ => Content is MainView);
+            /*
+            ClickGroupCommand = new ActionCommand(loadGroupView, _ => Content is MainMenu);
+            ClickPlanCommand = new ActionCommand(loadPlanView, _ => Content is MainMenu);
+            ClickTipCommand = new ActionCommand(loadTipView, _ => Content is MainMenu);
+            BackToMain = new ActionCommand(_ => Content = new MainMenu(), _ => !(Content is MainMenu));
+            */
+            Path = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\Background.png";
+        }
+
+        // Lädt die Kundenerstellungs-Ansicht in den Content 
+        public void loadTeamView(Object param)
+        {
+            Content = new CustomerView();
+        }
+        /* Lädt die Gruppenansicht in den Content 
+        public void loadGroupView(Object param)
+>>>>>>> b5e93b5bd53464a07a1d43ee7eaeab4223240ed9
         {
             Content = new KundenUebersichtView();
         }
