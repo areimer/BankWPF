@@ -37,6 +37,11 @@ namespace BankObj
             this.Konto = k;
         }
 
+        public override String ToString()
+        {
+            return "Kunde " + this.Kundennummer + " " + this.Name + " beraten durch " + this.Adv.Name + "\n" + "Kontonummer " + this.Konto.ID;
+        }
+
 
     }
 
@@ -63,6 +68,11 @@ namespace BankObj
             int tId = 0;
             //Kredit beim zustaendigen Berater einlisten
             this.Adv.Kredite.Add(new Kredit(tId, betrag,0, laufzeitMonate, start,0,"wartend"));
+        }
+
+        public override String ToString()
+        {
+            return "Geschäftskunde "+this.Kundennummer+" "+this.Name+" beraten durch "+this.Adv.Name+"\n"+"Kontonummer "+this.Konto.ID;
         }
     }
 

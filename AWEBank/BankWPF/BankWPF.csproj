@@ -113,5 +113,11 @@
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankObj\BankObj.csproj">
+      <Project>{06F9DBC8-9A80-40FA-B976-870E40FEE227}</Project>
+      <Name>BankObj</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
