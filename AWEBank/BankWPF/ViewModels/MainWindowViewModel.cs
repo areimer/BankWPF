@@ -18,15 +18,12 @@ namespace BankWPF.ViewModels
         private UIElement _content = new MainView();
         public string Path { get; private set; }
         public ICommand ClickCustomerCreationCommand { get; set; }
-<<<<<<< HEAD
         public ICommand ClickKundenUebersichtCommand { get; set; }
         public ICommand ClickBeraterCommand { get; set; }
         public ICommand ClickBeraterUebersichtCommand { get; set; }
-=======
         public ICommand ClickGroupCommand { get; set; }
         public ICommand ClickPlanCommand { get; set; }
         public ICommand ClickTipCommand { get; set; }
->>>>>>> 1e154464746ab50925b1cde475a62d3e6221f669
         public ICommand BackToMain { get; set; }
 
         /* Content Getter und Setter */
@@ -40,32 +37,24 @@ namespace BankWPF.ViewModels
         public MainWindowViewModel()
         {      
             
-            ClickCustomerCreationCommand = new ActionCommand(loadTeamView, _ => Content is MainView);
-<<<<<<< HEAD
-            
+            ClickCustomerCreationCommand = new ActionCommand(loadTeamView, _ => Content is MainView);            
             ClickKundenUebersichtCommand = new ActionCommand(loadKundenUebersichtView, _ => Content is MainView);
             ClickBeraterCommand = new ActionCommand(loadKundenUebersichtView, _ => Content is MainView);
             ClickBeraterUebersichtCommand = new ActionCommand(loadBeraterView, _ => Content is MainView);
             BackToMain = new ActionCommand(_ => Content = new MainView(), _ => !(Content is MainView));
-            
-=======
-            /*
+                        /*
             ClickGroupCommand = new ActionCommand(loadGroupView, _ => Content is MainMenu);
             ClickPlanCommand = new ActionCommand(loadPlanView, _ => Content is MainMenu);
             ClickTipCommand = new ActionCommand(loadTipView, _ => Content is MainMenu);
             BackToMain = new ActionCommand(_ => Content = new MainMenu(), _ => !(Content is MainMenu));
-            */
->>>>>>> 1e154464746ab50925b1cde475a62d3e6221f669
-            Path = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\Background.png";
+            */            Path = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\Background.png";
         }
 
         // Lädt die Kundenerstellungs-Ansicht in den Content 
         public void loadTeamView(Object param)
         {
             Content = new CustomerView();
-        }
-<<<<<<< HEAD
-      
+        }      
         public void loadKundenUebersichtView(Object param)
         {
             Content = new KundenUebersichtView();
@@ -80,9 +69,7 @@ namespace BankWPF.ViewModels
         {
             Content = new BeraterUebersichtView();
         }
-        
-=======
-        /* Lädt die Gruppenansicht in den Content 
+                /* Lädt die Gruppenansicht in den Content 
         public void loadGroupView(Object param)
         {
             Content = new GroupView();
@@ -98,6 +85,5 @@ namespace BankWPF.ViewModels
             Content = new TipView();
         }
         */
->>>>>>> 1e154464746ab50925b1cde475a62d3e6221f669
     }
 }

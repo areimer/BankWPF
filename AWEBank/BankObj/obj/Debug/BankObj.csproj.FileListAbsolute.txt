@@ -4,3 +4,8 @@ C:\Users\User\source\repos\BankWPF-master\AWEBank\BankObj\obj\Debug\BankObj.cspr
 C:\Users\User\source\repos\BankWPF-master\AWEBank\BankObj\obj\Debug\BankObj.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\BankWPF-master\AWEBank\BankObj\obj\Debug\BankObj.dll
 C:\Users\User\source\repos\BankWPF-master\AWEBank\BankObj\obj\Debug\BankObj.pdb
+C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\bin\Debug\BankObj.dll
+C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\bin\Debug\BankObj.pdb
+C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\obj\Debug\BankObj.csprojResolveAssemblyReference.cache
+C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\obj\Debug\BankObj.dll
+C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\obj\Debug\BankObj.pdb
