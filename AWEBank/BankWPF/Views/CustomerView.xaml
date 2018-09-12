@@ -34,6 +34,7 @@
         <CheckBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
         <TextBlock Grid.Row="4" Grid.Column="0" Width="323" FontSize="26" HorizontalAlignment="Left">Bonität</TextBlock>
         <CheckBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBoniBox"/>
-        <Button Grid.Row="5" Grid.Column="1" Name="CustomerCreationSaveButton" FontSize="30">Speichern</Button>
+        <TextBlock Grid.Row="5" Grid.Column="0" Name="customerMessageBox" Text="Keine Ereignisse"></TextBlock>
+        <Button Grid.Row="5" Grid.Column="1" Name="CustomerCreationSaveButton" FontSize="30" Click="CustomerCreationSaveButton_Click">Speichern</Button>
     </Grid>
 </UserControl>
