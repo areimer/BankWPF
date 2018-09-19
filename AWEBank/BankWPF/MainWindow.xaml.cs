@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BankObj;
 
 namespace BankWPF
 {
@@ -24,6 +25,10 @@ namespace BankWPF
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.Width;
+
+            MitarbeiterCol brcol = Mitarbeiter.ReadCSV();
+            KundeCol kucol = Kunde.ReadCSV();
+
         }
     }
 }

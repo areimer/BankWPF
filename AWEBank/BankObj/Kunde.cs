@@ -30,6 +30,12 @@ namespace BankObj
             this.Konto = k;
             this.Adv = b;
         }
+
+        public static KundeCol ReadCSV()
+        {
+            throw new NotImplementedException();
+        }
+
         public Kunde(int kdnr, String name, int alter, Konto k) {
             this.Kundennummer = kdnr;
             this.Name = name;

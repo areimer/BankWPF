@@ -9,3 +9,9 @@ C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\bin\Debug\BankObj.pdb
 C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\obj\Debug\BankObj.csprojResolveAssemblyReference.cache
 C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\obj\Debug\BankObj.dll
 C:\Users\Armin\Desktop\AWPROJ\AWEBank\BankObj\obj\Debug\BankObj.pdb
+C:\Users\User\Desktop\gitshit\AWEBank\BankObj\bin\Debug\BankObj.dll
+C:\Users\User\Desktop\gitshit\AWEBank\BankObj\bin\Debug\BankObj.pdb
+C:\Users\User\Desktop\gitshit\AWEBank\BankObj\obj\Debug\BankObj.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\gitshit\AWEBank\BankObj\obj\Debug\BankObj.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\gitshit\AWEBank\BankObj\obj\Debug\BankObj.dll
+C:\Users\User\Desktop\gitshit\AWEBank\BankObj\obj\Debug\BankObj.pdb
