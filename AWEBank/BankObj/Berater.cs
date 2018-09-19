@@ -7,27 +7,24 @@ using BankObj;
 
 namespace BankObj
 {
-    public class Berater
+    public class Berater : Mitarbeiter
     {
-        int mitarbeiternummer;
-        public int Mitarrbeiternummer { get; set; }
-        String name;
-        public String Name { get; set; }
-        String filiale;
-        public String Filiale { get; set; }
-
         public Berater() { }
-        
         public Berater(int manr, String name, String fil)
         {
             this.Mitarrbeiternummer = manr;
             this.Name = name;
             this.Filiale = fil;
         }
-
     }
 
-    public class GKBerater : Berater
+
+
+
+
+
+
+    public class GKBerater : Mitarbeiter
     {
         List<Kredit> kredite;
         public List<Kredit> Kredite { get; set; }

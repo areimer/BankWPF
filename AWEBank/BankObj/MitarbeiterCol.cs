@@ -7,8 +7,5 @@ using System.Collections.ObjectModel;
 
 namespace BankObj
 {
-    public class KundeCol : ObservableCollection<Kunde>
-    {
-
-    }
+    public class MitarbeiterCol : ObservableCollection<Mitarbeiter> { }
 }
