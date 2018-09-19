@@ -47,6 +47,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaktion.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="daten\berater\0.txt" />
+    <Content Include="daten\berater\1.txt" />
+    <Content Include="daten\kunden\1.txt" />
+    <Content Include="daten\kunden\0.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
