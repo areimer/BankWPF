@@ -48,7 +48,7 @@ namespace BankWPF.Views
             {
                 int cnr = 666; //naechste freie KDNR waehlen
                 int cage = Convert.ToInt32(CustomerAgeBox.Text); //Falscheingaben abfangen
-                newKunde = new Kunde(cnr, CustomerNameBox.Text, cage, new Konto(42)); //KontoID im Konto-Constructor automatisch
+                newKunde = new Kunde(cnr, CustomerNameBox.Text, cage, new Konto(42),newAdvisor); //KontoID im Konto-Constructor automatisch
                 customerMessageBox.Text = newKunde.ToString();
             }
         }
