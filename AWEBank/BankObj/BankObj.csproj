@@ -40,11 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mitarbeiter.cs" />
+    <Compile Include="BeraterCol.cs" />
     <Compile Include="Berater.cs" />
+    <Compile Include="KontoCol.cs" />
     <Compile Include="Konto.cs" />
+    <Compile Include="KreditCol.cs" />
     <Compile Include="Kredit.cs" />
+    <Compile Include="KundeCol.cs" />
     <Compile Include="Kunde.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MitarbeiterCol.cs" />
+    <Compile Include="TransaktionCol.cs" />
     <Compile Include="Transaktion.cs" />
   </ItemGroup>
   <ItemGroup>

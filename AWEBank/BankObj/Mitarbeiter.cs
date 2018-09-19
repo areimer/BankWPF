@@ -23,7 +23,10 @@ namespace BankObj
             this.name = name;
             this.filiale = fil;
         }
+        public Mitarbeiter()
+        {
 
+        }
 
 
 
