@@ -25,10 +25,6 @@ namespace BankWPF
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.Width;
-
-            MitarbeiterCol brcol = Mitarbeiter.ReadCSV();
-            //KundeCol kucol = Kunde.ReadCSV();
-
         }
     }
 }

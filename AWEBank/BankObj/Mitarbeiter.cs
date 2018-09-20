@@ -17,6 +17,7 @@ namespace BankObj
         public String Filiale { get; set; }
 
 
+
         protected Mitarbeiter(int manr, string name, string fil)
         {
             this.mitarbeiternummer = manr;
