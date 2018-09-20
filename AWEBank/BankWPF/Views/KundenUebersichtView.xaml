@@ -11,6 +11,12 @@
         <viewModels:KundenUebersichtViewViewModel x:Key="KundenUebersichtView"/>
     </UserControl.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Name="KundenUebersichtHeadline" Content="Ihre Kundenuebersicht"></Label>
     </Grid>
 </UserControl>

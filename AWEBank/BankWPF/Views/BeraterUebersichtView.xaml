@@ -11,6 +11,33 @@
         <viewModels:BeraterUebersichtViewViewModel x:Key="BeraterUebersichtViewViewModel"/>
     </UserControl.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center" Content="Beraterübersicht"></Label>
+        <Label Grid.Row="0" Grid.Column="1" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center" Content="Kundenzugehörigkeit"></Label>
+        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="0"  Margin="25,25,25,25" Opacity="0.9">
+            <DataGrid Name="BeraterUebersichtGrid" ItemsSource="{Binding Teams}" SelectedItem="{Binding SelectedBerater}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="Auto" Header="Beratername" Binding="{Binding Teamname}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="1"  Margin="25,25,25,25" Opacity="0.9">
+            <DataGrid Name="BeraterKundenGrid" ItemsSource="{Binding Teams}" SelectedItem="{Binding SelectedBerater}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="Auto" Header="Kunde" Binding="{Binding Teamname}"/>
+                    <DataGridTextColumn Width="Auto" Header="Geschäftskunde" Binding="{Binding Teamname}"/>
+                    <DataGridTextColumn Width="Auto" Header="Kredithöhe" Binding="{Binding Teamname}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Button Grid.Row="3" Grid.Column="1" Margin="25" Name="btnDeleteSelectedEntry" Content="Löschen" Height="40" Width="Auto" HorizontalAlignment="Right"></Button>  
     </Grid>
 </UserControl>

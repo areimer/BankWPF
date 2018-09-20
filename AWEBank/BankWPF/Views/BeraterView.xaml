@@ -6,11 +6,38 @@
              xmlns:local="clr-namespace:BankWPF.Views"
              xmlns:viewModels="clr-namespace:BankWPF.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="this">
     <UserControl.Resources>
-        <viewModels:BeraterViewViewModel x:Key="BeraterView"/>
+        <viewModels:BeraterViewViewModel x:Key="BeraterViewViewModel"/>
     </UserControl.Resources>
     <Grid>
-
+        <Rectangle Opacity="0.7" Margin="20,20,20,20">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="LightGray"></SolidColorBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    <Grid Visibility="Visible" Height="Auto" Width="Auto" Margin="150, 150, 150, 150" >
+        <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Name="lblMitNum" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30">Mitarbeiternummer</Label>
+            <Label Name="lblName" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30">Name</Label>
+            <Label Name="lblFiliale" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30">Filiale</Label>
+            <Label Name="lblGKBerater" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30">Geschäftskundenberater</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Height="Auto" Width="Auto" Margin="15,30,15,30"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="Auto" Width="Auto" Margin="15,30,15,30"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Height="Auto" Width="Auto" Margin="15,30,15,30"></TextBox>
+            <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></CheckBox>
+            <Button Name="btnCreateBerater" Grid.Row="4" Grid.Column="1" Height="30" Width="50"  Content="Anlegen" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+        </Grid>
     </Grid>
 </UserControl>

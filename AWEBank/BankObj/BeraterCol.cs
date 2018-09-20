@@ -11,7 +11,7 @@ namespace BankObj
     {
 
     }
-    public class GKBeraterCol : ObservableCollection<Berater.GKBerater>
+    public class GKBeraterCol : ObservableCollection<GKBerater>
     {
 
     }
