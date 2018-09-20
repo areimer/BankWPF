@@ -23,11 +23,11 @@
         <Label Grid.Row="0" Grid.Column="0" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center" Content="Beraterübersicht"></Label>
         <Label Grid.Row="0" Grid.Column="1" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center" Content="Kundenzugehörigkeit"></Label>
         <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="0"  Margin="25,25,25,25" Opacity="0.9">
-            <DataGrid Name="BeraterUebersichtGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
+            <DataGrid Name="BeraterUebersichtGrid" ItemsSource="{Binding BeraterListe}" SelectedItem="{Binding SelectedBerater}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="Auto" Header="Mitarbeiternummer" Binding="{Binding Adv.Mitarbeiternummer}"/>
-                    <DataGridTextColumn Width="Auto" Header="Beratername" Binding="{Binding Adv.Name}"/>
-                    <DataGridTextColumn Width="Auto" Header="Filiale" Binding="{Binding Adv.Filiale}"/>
+                    <DataGridTextColumn Width="Auto" Header="Mitarbeiternummer" Binding="{Binding Mitarrbeiternummer}"/>
+                    <DataGridTextColumn Width="Auto" Header="Beratername" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Width="Auto" Header="Filiale" Binding="{Binding Filiale}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

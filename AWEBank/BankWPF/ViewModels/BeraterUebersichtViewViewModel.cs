@@ -11,8 +11,8 @@ namespace BankWPF.ViewModels
     class BeraterUebersichtViewViewModel : ViewModelBase
     {
 
-        public ObservableCollection<Berater> BeraterListe { get; set; }
-        public ObservableCollection<Kunde> KundenListe { get; set; }
+        public BeraterCol BeraterListe { get; set; }
+        public KundeCol KundenListe { get; set; }
         private Berater selectedBerater;
         private Kunde selectedKunde;
 
@@ -20,14 +20,21 @@ namespace BankWPF.ViewModels
         public BeraterUebersichtViewViewModel()
         {
             BeraterListe = LoadBeraterData();
-            KundenListe = LoadKundenData();
-
-            var types = new HashSet<string>(KundenListe.Select(aa => aa.Adv.Name));
-            if (types.Count < KundenListe.Count)
+            KundenListe = new KundeCol();
+            foreach (Kunde item in LoadKundenData())
             {
-                // You have a duplicate...
-                // ...not necessarily easy to know WHO is the duplicate
+                KundenListe.Add(item);
             }
+
+
+            // Explain this shit to me lukas
+
+            //var types = new HashSet<string>(KundenListe.Select(aa => aa.Adv.Name));
+            //if (types.Count < KundenListe.Count)
+            //{
+            //    // You have a duplicate...
+            //    // ...not necessarily easy to know WHO is the duplicate
+            //}
         }
 
         /* SelectedBerater Getter und Setter */
@@ -37,6 +44,17 @@ namespace BankWPF.ViewModels
             set
             {
                 selectedBerater = value;
+                this.KundenListe = new KundeCol();
+                // Betanke Kundenliste nur mit den kuden, die den berater auch haben.
+                foreach (Kunde item in LoadKundenData())
+                {
+                    if (item.Adv.Mitarrbeiternummer == selectedBerater.Mitarrbeiternummer)
+                    {
+                        this.KundenListe.Add(item);
+                    }
+                }
+                // Damit das Property den Inotify Interface shit triggert und das UI es mitkriegt
+                OnPropertyChanged("KundenListe");
                 OnPropertyChanged("SelectedBerater");
             }
         }
@@ -52,9 +70,9 @@ namespace BankWPF.ViewModels
         }
 
         /* Returnt die Berater */
-        private ObservableCollection<Berater> LoadBeraterData()
+        private BeraterCol LoadBeraterData()
         {
-            ObservableCollection<Berater> beraterListe = new ObservableCollection<Berater>();
+            BeraterCol beraterListe = new BeraterCol();
 
             beraterListe.Add(new Berater()
             {
@@ -72,9 +90,9 @@ namespace BankWPF.ViewModels
             return beraterListe;
         }
 
-        private ObservableCollection<Kunde> LoadKundenData()
+        private List<Kunde> LoadKundenData()
         {
-            ObservableCollection<Kunde> kundenListe = new ObservableCollection<Kunde>();
+            List<Kunde> kundenListe = new List<Kunde>();
 
             kundenListe.Add(new Kunde()
             {
