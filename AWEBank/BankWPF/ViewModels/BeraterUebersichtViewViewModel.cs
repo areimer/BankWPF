@@ -21,13 +21,6 @@ namespace BankWPF.ViewModels
         {
             BeraterListe = LoadBeraterData();
             KundenListe = LoadKundenData();
-
-            var types = new HashSet<string>(KundenListe.Select(aa => aa.Adv.Name));
-            if (types.Count < KundenListe.Count)
-            {
-                // You have a duplicate...
-                // ...not necessarily easy to know WHO is the duplicate
-            }
         }
 
         /* SelectedBerater Getter und Setter */

@@ -11,18 +11,29 @@
         <viewModels:BeraterUebersichtViewViewModel x:Key="BeraterUebersichtViewViewModel"/>
     </UserControl.Resources>
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
         <Label Grid.Row="0" Grid.Column="0" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center" Content="Beraterübersicht"></Label>
         <Label Grid.Row="0" Grid.Column="1" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center" Content="Kundenzugehörigkeit"></Label>
-        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="0"  Margin="25,25,25,25" Opacity="0.9">
+
+
+        <Rectangle Grid.Row="1" Grid.ColumnSpan="2"  Opacity="0.7" Margin="20,20,20,20">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="LightGray"></SolidColorBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="0" Margin="50,50,50,50" Opacity="0.9">
             <DataGrid Name="BeraterUebersichtGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="Auto" Header="Mitarbeiternummer" Binding="{Binding Adv.Mitarbeiternummer}"/>
@@ -31,7 +42,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="1"  Margin="25,25,25,25" Opacity="0.9">
+        
+        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="1" Margin="50,50,50,50" Opacity="0.9">
             <DataGrid Name="BeraterKundenGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="Auto" Header="Kunde" Binding="{Binding Kundennummer}"/>
@@ -40,6 +52,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+        
         <Button Grid.Row="3" Grid.Column="1" Margin="25" Name="btnDeleteSelectedEntry" Content="Löschen" Height="40" Width="Auto" HorizontalAlignment="Right"></Button>  
+        
     </Grid>
 </UserControl>
