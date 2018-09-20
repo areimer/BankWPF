@@ -38,9 +38,10 @@ namespace BankObj
                 var filepath = file;
                 System.IO.StreamReader reader = new System.IO.StreamReader(filepath);
                 string line;
+                int row = 0;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (line.Split(';')[3] == "0")
+                    if (line.Split(';')[3] == "0" && row == 0)
                     {
                         // Normaler Dude
                         Berater br = new Berater()
@@ -51,8 +52,9 @@ namespace BankObj
                             
                         };
                         bcol.Add(br);
+                        row++;
                     }
-                    else if (line.Split(';')[3] == "1")
+                    else if (line.Split(';')[3] == "1" && row == 0)
                     {
                         GKBerater br = new GKBerater()
                         {
@@ -62,6 +64,7 @@ namespace BankObj
 
                         };
                         bcol.Add(br);
+                        row++;
                     }
 
                 }
