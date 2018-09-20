@@ -10,7 +10,6 @@ namespace BankWPF.ViewModels
 {
     class BeraterUebersichtViewViewModel : ViewModelBase
     {
-
         public MitarbeiterCol BeraterListe { get; set; }
         public KundeCol KundenListe { get; set; }
         private Mitarbeiter selectedBerater;
@@ -36,13 +35,13 @@ namespace BankWPF.ViewModels
             set
             {
                 selectedBerater = value;
-                this.KundenListe = new KundeCol();
+                KundenListe = new KundeCol();
                 // Betanke Kundenliste nur mit den kuden, die den berater auch haben.
                 foreach (Kunde item in LoadKundenData())
                 {
                     if (item.Berater.Mitarrbeiternummer == selectedBerater.Mitarrbeiternummer)
                     {
-                        this.KundenListe.Add(item);
+                        KundenListe.Add(item);
                     }
                 }
 
