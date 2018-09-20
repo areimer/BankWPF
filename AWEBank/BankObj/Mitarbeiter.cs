@@ -48,18 +48,26 @@ namespace BankObj
                             Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
                             Name = line.Split(';')[1],
                             Filiale = line.Split(';')[2],
-
+                            
                         };
+                        bcol.Add(br);
                     }
                     else if (line.Split(';')[3] == "1")
                     {
+                        GKBerater br = new GKBerater()
+                        {
+                            Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
+                            Name = line.Split(';')[1],
+                            Filiale = line.Split(';')[2],
 
+                        };
+                        bcol.Add(br);
                     }
 
                 }
                 reader.Close();
                 // Hier speichern
-                //bcol.Add(br);
+                ;
             }
             return bcol;
         }
