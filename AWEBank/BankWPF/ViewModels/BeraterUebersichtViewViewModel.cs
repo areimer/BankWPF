@@ -25,16 +25,8 @@ namespace BankWPF.ViewModels
             {
                 KundenListe.Add(item);
             }
-
-
-            // Explain this shit to me lukas
-
-            //var types = new HashSet<string>(KundenListe.Select(aa => aa.Adv.Name));
-            //if (types.Count < KundenListe.Count)
-            //{
-            //    // You have a duplicate...
-            //    // ...not necessarily easy to know WHO is the duplicate
-            //}
+            //Neuen, leeren Berater als Default setzen
+            SelectedBerater = new Berater();
         }
 
         /* SelectedBerater Getter und Setter */
@@ -53,6 +45,7 @@ namespace BankWPF.ViewModels
                         this.KundenListe.Add(item);
                     }
                 }
+
                 // Damit das Property den Inotify Interface shit triggert und das UI es mitkriegt
                 OnPropertyChanged("KundenListe");
                 OnPropertyChanged("SelectedBerater");
