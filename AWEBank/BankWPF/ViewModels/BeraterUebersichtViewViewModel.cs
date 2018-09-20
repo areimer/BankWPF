@@ -11,9 +11,9 @@ namespace BankWPF.ViewModels
     class BeraterUebersichtViewViewModel : ViewModelBase
     {
 
-        public BeraterCol BeraterListe { get; set; }
+        public MitarbeiterCol BeraterListe { get; set; }
         public KundeCol KundenListe { get; set; }
-        private Berater selectedBerater;
+        private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
 
         /* Konstruktor */
@@ -30,7 +30,7 @@ namespace BankWPF.ViewModels
         }
 
         /* SelectedBerater Getter und Setter */
-        public Berater SelectedBerater
+        public Mitarbeiter SelectedBerater
         {
             get { return selectedBerater; }
             set
@@ -40,7 +40,7 @@ namespace BankWPF.ViewModels
                 // Betanke Kundenliste nur mit den kuden, die den berater auch haben.
                 foreach (Kunde item in LoadKundenData())
                 {
-                    if (item.Adv.Mitarrbeiternummer == selectedBerater.Mitarrbeiternummer)
+                    if (item.Berater.Mitarrbeiternummer == selectedBerater.Mitarrbeiternummer)
                     {
                         this.KundenListe.Add(item);
                     }
@@ -63,66 +63,17 @@ namespace BankWPF.ViewModels
         }
 
         /* Returnt die Berater */
-        private BeraterCol LoadBeraterData()
+        private MitarbeiterCol LoadBeraterData()
         {
-            BeraterCol beraterListe = new BeraterCol();
-
-            beraterListe.Add(new Berater()
-            {
-                Name = "Hans Wurst",
-                Mitarrbeiternummer = 1,
-                Filiale = "Kiel Gaarden",
-            });
-
-            beraterListe.Add(new Berater()
-            {
-                Name = "Fred Feuerstein",
-                Mitarrbeiternummer = 2,
-                Filiale = "Kiel Elmschenhagen"
-            });
+            MitarbeiterCol beraterListe = new MitarbeiterCol();
+            beraterListe = Mitarbeiter.ReadCSV();
             return beraterListe;
         }
 
-        private List<Kunde> LoadKundenData()
+        private KundeCol LoadKundenData()
         {
-            List<Kunde> kundenListe = new List<Kunde>();
-
-            kundenListe.Add(new Kunde()
-            {
-                Kundennummer = 1,
-                Name = "Max Mustermann",
-                Alter = 22,
-                Konto = new Konto(),
-                Adv = BeraterListe[0]
-            });
-
-            kundenListe.Add(new Kunde()
-            {
-                Kundennummer = 2,
-                Name = "Hans Kackwurst",
-                Alter = 47,
-                Konto = new Konto(),
-                Adv = BeraterListe[1]
-            });
-
-            kundenListe.Add(new Kunde()
-            {
-                Kundennummer = 3,
-                Name = "Klaus Kleber",
-                Alter = 34,
-                Konto = new Konto(),
-                Adv = BeraterListe[0]
-            });
-
-            kundenListe.Add(new Kunde()
-            {
-                Kundennummer = 4,
-                Name = "Josef Stalin",
-                Alter = 139,
-                Konto = new Konto(),
-                Adv = BeraterListe[0]
-            });
-
+            KundeCol kundenListe = new KundeCol();
+            kundenListe = Kunde.ReadCSV(BeraterListe);
             return kundenListe;
         }
     }

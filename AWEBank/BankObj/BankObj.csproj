@@ -63,8 +63,12 @@
     <Content Include="daten\berater\0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="daten\berater\1.txt" />
-    <Content Include="daten\kunden\1.txt" />
+    <Content Include="daten\berater\1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="daten\kunden\1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="daten\kunden\0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
