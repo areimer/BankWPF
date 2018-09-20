@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BankObj
 {
@@ -38,7 +39,7 @@ namespace BankObj
 
 
 
-        public static KundeCol ReadCSV(MitarbeiterCol mcol)
+        public static KundeCol ReadCSV(ObservableCollection<Mitarbeiter> mcol)
         {
             KundeCol kcol = new KundeCol();
             foreach (var file in (System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden")))

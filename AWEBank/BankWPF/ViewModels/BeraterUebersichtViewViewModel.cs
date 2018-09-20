@@ -10,7 +10,7 @@ namespace BankWPF.ViewModels
 {
     class BeraterUebersichtViewViewModel : ViewModelBase
     {
-        public MitarbeiterCol BeraterListe { get; set; }
+        public ObservableCollection<Mitarbeiter> BeraterListe { get; set; }
         public KundeCol KundenListe { get; set; }
         private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
@@ -62,9 +62,9 @@ namespace BankWPF.ViewModels
         }
 
         /* Returnt die Berater */
-        private MitarbeiterCol LoadBeraterData()
+        private ObservableCollection<Mitarbeiter> LoadBeraterData()
         {
-            MitarbeiterCol beraterListe = new MitarbeiterCol();
+            ObservableCollection<Mitarbeiter> beraterListe = new ObservableCollection<Mitarbeiter>();
             beraterListe = ReadCSV();
             return beraterListe;
         }
@@ -76,9 +76,9 @@ namespace BankWPF.ViewModels
             return kundenListe;
         }
 
-        public static MitarbeiterCol ReadCSV()
+        public static ObservableCollection<Mitarbeiter> ReadCSV()
         {
-            MitarbeiterCol bcol = new MitarbeiterCol();
+            ObservableCollection<Mitarbeiter> bcol = new ObservableCollection<Mitarbeiter>();
             foreach (var file in (System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater")))
             {
                 var filepath = file;
