@@ -8,15 +8,47 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <viewModels:KundenUebersichtViewViewModel x:Key="KundenUebersichtView"/>
+        <viewModels:KundenUebersichtViewViewModel x:Key="KundenUebersichtViewViewModel"/>
     </UserControl.Resources>
     <Grid>
+        
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Name="KundenUebersichtHeadline" Content="Ihre Kundenuebersicht"></Label>
+        
+        <Label Grid.Row="0" Grid.Column="0" Name="Headline" Content="Kundenübersicht" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="0" Grid.Column="1" Name="Headline2" Content="Kontoübersicht" FontSize="40" FontStyle="Oblique" HorizontalAlignment="Center"></Label>
+        
+        <Rectangle Grid.Row="1" Grid.ColumnSpan="2"  Opacity="0.7" Margin="20,20,20,20">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="LightGray"></SolidColorBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Grid DataContext="{StaticResource KundenUebersichtViewViewModel}" Grid.Row="1" Grid.Column="0"  Margin="50,50,50,50" Opacity="0.9">
+                <DataGrid Name="BeraterUebersichtGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                    <DataGridTextColumn Width="Auto" Header="Kundennummer" Binding="{Binding Kundennummer}"/>
+                    <DataGridTextColumn Width="Auto" Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Width="Auto" Header="Alter" Binding="{Binding Alter}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+        <Grid DataContext="{StaticResource KundenUebersichtViewViewModel}" Grid.Row="1" Grid.Column="1"  Margin="50,50,50,50" Opacity="0.9">
+                <DataGrid Name="BeraterKundenGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde}" Height="Auto" Width="Auto" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="Auto" Header="Kontostand" Binding="{Binding Kundennummer}"/>
+                        <DataGridTextColumn Width="Auto" Header="Bla" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Width="Auto" Header="Blub" Binding="{Binding Alter}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            
+        </Grid>
     </Grid>
 </UserControl>
