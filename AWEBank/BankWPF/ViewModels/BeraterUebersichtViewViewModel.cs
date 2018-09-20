@@ -21,6 +21,13 @@ namespace BankWPF.ViewModels
         {
             BeraterListe = LoadBeraterData();
             KundenListe = LoadKundenData();
+
+            var types = new HashSet<string>(KundenListe.Select(aa => aa.Adv.Name));
+            if (types.Count < KundenListe.Count)
+            {
+                // You have a duplicate...
+                // ...not necessarily easy to know WHO is the duplicate
+            }
         }
 
         /* SelectedBerater Getter und Setter */
@@ -52,14 +59,14 @@ namespace BankWPF.ViewModels
             beraterListe.Add(new Berater()
             {
                 Name = "Hans Wurst",
-                Mitarbeiternummer = 1,
+                Mitarrbeiternummer = 1,
                 Filiale = "Kiel Gaarden",
             });
 
             beraterListe.Add(new Berater()
             {
                 Name = "Fred Feuerstein",
-                Mitarbeiternummer = 2,
+                Mitarrbeiternummer = 2,
                 Filiale = "Kiel Elmschenhagen"
             });
             return beraterListe;
