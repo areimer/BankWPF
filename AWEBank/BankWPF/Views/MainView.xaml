@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!-- <Button Name="btnKunde" Grid.Row="0" Grid.Column="0" Content="Kunde anlegen" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickCustomerCreationCommand}"/> -->
-            <Button Name="btnKunde" Grid.Row="0" Grid.Column="0"FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickCustomerCreationCommand}">
+            <Button Name="btnKunde" Grid.Row="0" Grid.Column="0" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickCustomerCreationCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="DarkBlue"/>
