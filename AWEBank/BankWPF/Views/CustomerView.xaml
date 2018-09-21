@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWPF.Views"
-        mc:Ignorable="d"
->
-    <Grid>
+        xmlns:viewModels="clr-namespace:BankWPF.ViewModels"
+        mc:Ignorable="d">
+    <UserControl.Resources>
+        <viewModels:KundenAnlegenViewViewModel x:Key="KundenAnlegenViewViewModel"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource KundenAnlegenViewViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -20,9 +23,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="26">Name</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" FontSize="26" Name="CustomerNameBox"/>
+        <TextBox Text="{Binding N_name, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="0" Grid.Column="1" FontSize="26" Name="CustomerNameBox"/>
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="26">Alter</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" FontSize="26" Name="CustomerAgeBox"/>
+        <TextBox Text="{Binding N_alter, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" FontSize="26" Name="CustomerAgeBox"/>
         <TextBlock Grid.Row="2" Grid.Column="0" FontSize="26">Berater</TextBlock>
         <Menu Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <MenuItem Header="Berater" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -31,10 +34,10 @@
         </Menu>
         <!-- <TextBox Grid.Row="2" Grid.Column="1"  FontSize="26" Name="CustomerAdvisorBox"/> -->
         <TextBlock Grid.Row="3" Grid.Column="0" FontSize="26">Geschäftskunde</TextBlock>
-        <CheckBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
+        <CheckBox  IsChecked="{Binding N_gk, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
         <TextBlock Grid.Row="4" Grid.Column="0" Width="323" FontSize="26" HorizontalAlignment="Left">Bonität</TextBlock>
-        <CheckBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBoniBox"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" Name="customerMessageBox" Text="Keine Ereignisse"></TextBlock>
-        <Button Grid.Row="5" Grid.Column="1" Name="CustomerCreationSaveButton" FontSize="30" Click="CustomerCreationSaveButton_Click">Speichern</Button>
+        <CheckBox IsChecked="{Binding N_bon, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBoniBox"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Name="customerMessageBox" Text="{Binding N_ergebnis, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBlock>
+        <Button Grid.Row="5" Grid.Column="1" Name="FickDichArminButtonsBrauchenKeineNamenWennSieBinden" FontSize="30" Command="{Binding AnlegenCommand}">Speichern</Button>
     </Grid>
 </UserControl>

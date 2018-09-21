@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\ActionCommands.cs" />
     <Compile Include="ViewModels\BeraterUebersichtViewViewModel.cs" />
+    <Compile Include="ViewModels\KundenAnlegenViewViewModel.cs" />
     <Compile Include="ViewModels\BeraterViewViewModel.cs" />
     <Compile Include="ViewModels\KundenUebersichtViewViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
