@@ -25,14 +25,33 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Grid.Row="0">
-                
+            <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock FontSize="20" Text="Name"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Kudennummer"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Alter"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Berater"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Kontonummer"></TextBlock>
             </StackPanel>
-            <DataGrid Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Kunde.Konto.Transaktionen}" SelectedItem="{Binding Kunde.Konto.Transaktionen}">
-                
-            </DataGrid>
+            <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock FontSize="20" Text="{Binding Kunde.Name}"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Kundennummer}"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Alter}"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Berater.Name}"></TextBlock>
+                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Konto.ID}"></TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="0">
+                <TextBlock FontSize="20" Text="Transaktionshistorie"></TextBlock>
+                <DataGrid  ItemsSource="{Binding Kunde.Konto.Transaktionen}" FontSize="20" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="Auto" Header="Datum" Binding="{Binding Cleandate}"/>
+                        <DataGridTextColumn Width="Auto" Header="Betrag" Binding="{Binding Betrag}"/>
+                        <DataGridTextColumn Width="Auto" Header="Beschreibung" Binding="{Binding Art}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

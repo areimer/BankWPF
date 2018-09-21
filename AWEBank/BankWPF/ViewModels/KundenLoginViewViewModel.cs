@@ -21,6 +21,9 @@ namespace BankWPF.ViewModels
         String nachlogin;
         Kunde kunde;
         ObservableCollection<Kunde> kcol;
+
+
+
         public KundenLoginViewViewModel()
         {
             L_password = "";
@@ -100,11 +103,19 @@ namespace BankWPF.ViewModels
         }
         private void OnLoginExecuted(object obj)
         {
-            Kunde = Kcol.Where(x => x.Name == l_name).FirstOrDefault();
-            Vorlogin = "Hidden";
-            OnPropertyChanged("Vorlogin");
-            Nachlogin = "Visible";
-            OnPropertyChanged("Nachlogin");
+            Kcol = KundenAnlegenViewViewModel.ReadCSV(BeraterUebersichtViewViewModel.ReadCSV());
+            if (Kcol.Where(x => x.Name == l_name).Count() == 0)
+            {
+               
+            }
+            else
+            {
+                Kunde = Kcol.Where(x => x.Name == l_name).FirstOrDefault();
+                Vorlogin = "Hidden";
+                OnPropertyChanged("Vorlogin");
+                Nachlogin = "Visible";
+                OnPropertyChanged("Nachlogin");
+            }
         }
     }
 }
