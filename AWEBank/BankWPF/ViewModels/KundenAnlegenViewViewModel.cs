@@ -53,7 +53,7 @@ namespace BankWPF.ViewModels
             AnlegenCommand = new ActionCommand(OnAnlegenExecuted, OnAnlegenCanExecute);
             KundenListe = new KundeCol();
             MitarbeiterListe = BeraterUebersichtViewViewModel.ReadCSV();
-            KundenListe = Kunde.ReadCSV(MitarbeiterListe);
+            KundenListe = ReadCSV(MitarbeiterListe);
             N_ergebnis = "test";
             N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
 
@@ -137,7 +137,7 @@ namespace BankWPF.ViewModels
         {
             foreach (Kunde item in col)
             {
-                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden\\" + item.Kundennummer + "_t.txt"))
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden\\" + item.Kundennummer + ".txt"))
                 {
                     
 
@@ -145,9 +145,14 @@ namespace BankWPF.ViewModels
                     {
                         sw.WriteLine(item.Kundennummer + ";" + item.Name + ";" + item.Alter + ";" + item.Berater.Name + ";0");
                         sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
-                        foreach (Transaktion subitem in item.Konto.Transaktionen)
+                        if (item.Konto.Transaktionen != null)
                         {
-                            sw.WriteLine();
+
+
+                            foreach (Transaktion subitem in item.Konto.Transaktionen)
+                            {
+                                sw.WriteLine(subitem.Betrag + ";" + subitem.Art + ";" + subitem.Datum.Year + "." + subitem.Datum.Month + "." + subitem.Datum.Day + "." + subitem.Datum.Hour + "." + subitem.Datum.Minute);
+                            }
                         }
                     }
                     if (Object.ReferenceEquals(item.GetType(), new GKunde().GetType()))
@@ -156,7 +161,8 @@ namespace BankWPF.ViewModels
                         sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
                         foreach (Transaktion subitem in item.Konto.Transaktionen)
                         {
-                            sw.WriteLine();
+                            sw.WriteLine(subitem.Betrag + ";" + subitem.Art + ";" + subitem.Datum.Year + "." + subitem.Datum.Month + "." + subitem.Datum.Day + "." + subitem.Datum.Hour + "." + subitem.Datum.Minute);
+
                         }
                     }
                     sw.Close();
@@ -176,6 +182,82 @@ namespace BankWPF.ViewModels
 
 
 
+
+
+        public static KundeCol ReadCSV(ObservableCollection<Mitarbeiter> mcol)
+        {
+            KundeCol kcol = new KundeCol();
+            foreach (var file in (System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden")))
+            {
+                var filepath = file;
+                System.IO.StreamReader reader = new System.IO.StreamReader(filepath);
+                string line;
+                int row = 0;
+                bool isGK = false;
+                while ((line = reader.ReadLine()) != null)
+                {
+
+                        if (row == 1 && kcol.LastOrDefault().Kundennummer == Convert.ToInt32(filepath.Split('\\').Where(x => x.Contains('.')).LastOrDefault().Split('.').FirstOrDefault()))
+                        {
+                            kcol.LastOrDefault().Konto.ID = kcol.LastOrDefault().Kundennummer;
+                            kcol.LastOrDefault().Konto.Kontostand = (long)Convert.ToDouble(line.Split(';').LastOrDefault());
+
+
+                        }
+                        if (row > 1 && kcol.LastOrDefault().Kundennummer == Convert.ToInt32(filepath.Split('\\').Where(x => x.Contains('.')).LastOrDefault().Split('.').FirstOrDefault()))
+                        {
+                            kcol.LastOrDefault().Konto.Transaktionen.Add(new Transaktion(Convert.ToInt32(line.Split(';')[0]), line.Split(';')[1], line.Split(';')[2]));
+                        }
+                        if (row == 0)
+                        {
+
+
+                            if (line.Split(';')[4] == "0" && row == 0)
+                            {
+                                // Normaler Dude
+                                Kunde br = new Kunde()
+                                {
+                                    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                                    Name = line.Split(';')[1],
+                                    Alter = Convert.ToInt32(line.Split(';')[2]),
+                                    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                                    Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+
+                                };
+                                br.Konto.Transaktionen = new ObservableCollection<Transaktion>();
+                                kcol.Add(br);
+
+                            }
+                            else if (line.Split(';')[4] == "1" && row == 0)
+                            {
+                                GKunde br = new GKunde()
+                                {
+                                    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                                    Name = line.Split(';')[1],
+                                    Alter = Convert.ToInt32(line.Split(';')[2]),
+                                    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                                    Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+
+
+                                };
+                                isGK = true;
+                                br.Konto.Transaktionen = new ObservableCollection<Transaktion>();
+
+                                kcol.Add(br);
+
+                            }
+                        }
+                    
+
+                    row++;
+
+                }
+                reader.Close();
+                // Hier speichern
+                ;
+            }
+            return kcol;
+        }
     }
     }
 

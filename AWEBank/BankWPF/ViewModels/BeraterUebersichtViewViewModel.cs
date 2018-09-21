@@ -72,7 +72,7 @@ namespace BankWPF.ViewModels
         private KundeCol LoadKundenData()
         {
             KundeCol kundenListe = new KundeCol();
-            kundenListe = Kunde.ReadCSV(BeraterListe);
+            kundenListe = KundenAnlegenViewViewModel.ReadCSV(BeraterListe);
             return kundenListe;
         }
 
