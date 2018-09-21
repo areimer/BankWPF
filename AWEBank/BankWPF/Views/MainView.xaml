@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!-- <Button Name="btnKunde" Grid.Row="0" Grid.Column="0" Content="Kunde anlegen" Margin="10" Padding="10" Opacity="0.5" Background="DarkBlue" FontSize="36" Foreground="White" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickCustomerCreationCommand}"/> -->
+            
             <Button Name="btnKunde" Grid.Row="0" Grid.Column="0" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickCustomerCreationCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -48,6 +48,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+            
             <Button Name="btnBerater" Grid.Row="0" Grid.Column="1" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickBeraterCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -76,6 +77,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+            
             <Button Name="btnBeraterUebersicht" Grid.Row="1" Grid.Column="0" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickBeraterUebersichtCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -104,6 +106,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+            
             <Button Name="btnKundenUebersicht" Grid.Row="1" Grid.Column="1" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickKundenUebersichtCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -132,6 +135,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+            
             </Grid>
     </Grid>
 </UserControl>

@@ -10,8 +10,7 @@ namespace BankWPF.ViewModels
 {
     class BeraterUebersichtViewViewModel : ViewModelBase
     {
-
-        public MitarbeiterCol BeraterListe { get; set; }
+        public ObservableCollection<Mitarbeiter> BeraterListe { get; set; }
         public KundeCol KundenListe { get; set; }
         private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
@@ -25,16 +24,8 @@ namespace BankWPF.ViewModels
             {
                 KundenListe.Add(item);
             }
-
-
-            // Explain this shit to me lukas
-
-            //var types = new HashSet<string>(KundenListe.Select(aa => aa.Adv.Name));
-            //if (types.Count < KundenListe.Count)
-            //{
-            //    // You have a duplicate...
-            //    // ...not necessarily easy to know WHO is the duplicate
-            //}
+            //Neuen, leeren Berater als Default setzen
+            SelectedBerater = new Berater();
         }
 
         /* SelectedBerater Getter und Setter */
@@ -44,15 +35,16 @@ namespace BankWPF.ViewModels
             set
             {
                 selectedBerater = value;
-                this.KundenListe = new KundeCol();
+                KundenListe = new KundeCol();
                 // Betanke Kundenliste nur mit den kuden, die den berater auch haben.
                 foreach (Kunde item in LoadKundenData())
                 {
                     if (item.Berater.Mitarrbeiternummer == selectedBerater.Mitarrbeiternummer)
                     {
-                        this.KundenListe.Add(item);
+                        KundenListe.Add(item);
                     }
                 }
+
                 // Damit das Property den Inotify Interface shit triggert und das UI es mitkriegt
                 OnPropertyChanged("KundenListe");
                 OnPropertyChanged("SelectedBerater");
@@ -70,10 +62,10 @@ namespace BankWPF.ViewModels
         }
 
         /* Returnt die Berater */
-        private MitarbeiterCol LoadBeraterData()
+        private ObservableCollection<Mitarbeiter> LoadBeraterData()
         {
-            MitarbeiterCol beraterListe = new MitarbeiterCol();
-            beraterListe = Mitarbeiter.ReadCSV();
+            ObservableCollection<Mitarbeiter> beraterListe = new ObservableCollection<Mitarbeiter>();
+            beraterListe = ReadCSV();
             return beraterListe;
         }
 
@@ -82,6 +74,51 @@ namespace BankWPF.ViewModels
             KundeCol kundenListe = new KundeCol();
             kundenListe = Kunde.ReadCSV(BeraterListe);
             return kundenListe;
+        }
+
+        public static ObservableCollection<Mitarbeiter> ReadCSV()
+        {
+            ObservableCollection<Mitarbeiter> bcol = new ObservableCollection<Mitarbeiter>();
+            foreach (var file in (System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater")))
+            {
+                var filepath = file;
+                System.IO.StreamReader reader = new System.IO.StreamReader(filepath);
+                string line;
+                int row = 0;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Split(';')[3] == "0" && row == 0)
+                    {
+                        // Normaler Dude
+                        Berater br = new Berater()
+                        {
+                            Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
+                            Name = line.Split(';')[1],
+                            Filiale = line.Split(';')[2],
+
+                        };
+                        bcol.Add(br);
+                        row++;
+                    }
+                    else if (line.Split(';')[3] == "1" && row == 0)
+                    {
+                        GKBerater br = new GKBerater()
+                        {
+                            Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
+                            Name = line.Split(';')[1],
+                            Filiale = line.Split(';')[2],
+
+                        };
+                        bcol.Add(br);
+                        row++;
+                    }
+
+                }
+                reader.Close();
+                // Hier speichern
+                ;
+            }
+            return bcol;
         }
     }
 }

@@ -55,7 +55,6 @@
     <Compile Include="KundeCol.cs" />
     <Compile Include="Kunde.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MitarbeiterCol.cs" />
     <Compile Include="TransaktionCol.cs" />
     <Compile Include="Transaktion.cs" />
   </ItemGroup>
