@@ -38,6 +38,7 @@
                     <DataGridTextColumn Width="Auto" Header="Geschäftskunde" Binding="{Binding Name}"/>
                     <DataGridTextColumn Width="Auto" Header="Kredithöhe" Binding="{Binding Alter}"/>
                     <DataGridTextColumn Width="Auto" Header="Berater" Binding="{Binding Berater.Name}"/>
+                    <DataGridTextColumn Width="Auto" Header="KontoStand" Binding="{Binding Konto.Kontostand}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+
 
 namespace BankObj
 {
@@ -11,6 +13,7 @@ namespace BankObj
         int id;
         public int ID { get; set; }
         List<Transaktion> transaktionen;
+        public ObservableCollection<Transaktion> Transaktionen { get; set; }
         long kontostand;
         public long Kontostand { get; set; }
 
@@ -19,7 +22,7 @@ namespace BankObj
         public Konto(int id)
         {
             this.ID = id;
-            this.transaktionen = new List<Transaktion>();
+            this.Transaktionen = new ObservableCollection<Transaktion>();
             this.kontostand = 0;
         }
 
@@ -27,7 +30,7 @@ namespace BankObj
         //erlaubte Transaktionen "ein", "aus", "uber"
         public void TransaktionTaetigen(String art, long betrag)
         {
-            transaktionen.Add(new Transaktion(betrag, art));
+            transaktionen.Add(new Transaktion(betrag, art,"2018.2.3.1.2"));
             switch (art)
             {
                 case "ein":

@@ -27,7 +27,7 @@ namespace BankWPF.ViewModels
         GKBerater newGAdvisor = new GKBerater();
         Kunde newKunde = new Kunde();
         GKunde newGKunde = new GKunde();
-        KundeCol kcol = new KundeCol();
+
 
 
 
@@ -53,10 +53,9 @@ namespace BankWPF.ViewModels
             AnlegenCommand = new ActionCommand(OnAnlegenExecuted, OnAnlegenCanExecute);
             KundenListe = new KundeCol();
             MitarbeiterListe = BeraterUebersichtViewViewModel.ReadCSV();
-            KundenListe = Kunde.ReadCSV(MitarbeiterListe);
-            kcol = Kunde.ReadCSV(BeraterUebersichtViewViewModel.ReadCSV());
+            KundenListe = ReadCSV(MitarbeiterListe);
             N_ergebnis = "test";
-
+            N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
 
         }
 
@@ -88,56 +87,88 @@ namespace BankWPF.ViewModels
         private void OnAnlegenExecuted(object obj)
         {
             // Button Logik
-            int nextID = GetLastID(kcol) + 1;
+            int nextID = GetLastID(KundenListe) + 1;
             var test = N_name;
             test = N_name;
+            
 
-
-            Kunde neuer = new Kunde()
+            if (!N_gk)
             {
-                Alter = N_alter,
-                Name = N_name,
-                Kundennummer = nextID,
-                Konto = new Konto() { ID = nextID },
-                // Austauschen mit func
-                Berater = new Berater()
+
+
+                Kunde neuer = new Kunde()
                 {
-                    Name="Test Ber",
-                    Filiale="HH",
-                    Mitarrbeiternummer=4679
-                }
-                
-            };
+                    Alter = N_alter,
+                    Name = N_name,
+                    Kundennummer = nextID,
+                    Konto = new Konto() { ID = nextID },
+                    // Austauschen mit func
+                    Berater = N_mitarbeiter
+                };
+                KundenListe.Add(neuer);
+                N_ergebnis = neuer.ToString();
+            }
+            else
+            {
+                GKunde neuer = new GKunde()
+                {
+                    Alter = N_alter,
+                    Name = N_name,
+                    Kundennummer = nextID,
+                    Konto = new Konto() { ID = nextID },
+                    // Austauschen mit func
+                    Berater = N_mitarbeiter
+                };
 
 
-
-            N_ergebnis = neuer.ToString();
-
-
-
+                KundenListe.Add(neuer);
+                N_ergebnis = neuer.ToString();
+            }
 
 
+            
+            SaveCSV(KundenListe);
+           
 
-            //if (CustomerBusinessBox.IsChecked == true)
-            //{
-            //    int cnr = nextID; //naechste freie KDNR waehlen
-            //    int cage = Convert.ToInt32(CustomerAgeBox.Text); //Falscheingaben abfangen
-            //    bool cboni = false;
-            //    //newGAdvisor= Berater-ID aus menu lesen, GKunde nur mit GKBerater, zuweisen
-            //    if (CustomerBoniBox.IsChecked == true) { cboni = true; } else { cboni = false; } //Auswertung Bonitaet Checkbox
 
-            //    newGKunde = new GKunde(cnr, CustomerNameBox.Text, cage, cboni, new Konto(), newGAdvisor);
-            //    customerMessageBox.Text = newGKunde.ToString();
-            //}
-            //else
-            //{
-            //    int cnr = nextID; //naechste freie KDNR waehlen
-            //    int cage = Convert.ToInt32(CustomerAgeBox.Text); //Falscheingaben abfangen
-            //    newKunde = new Kunde(cnr, CustomerNameBox.Text, cage, new Konto(42)); //KontoID im Konto-Constructor automatisch
-            //    customerMessageBox.Text = newKunde.ToString();
-            //}
         }
 
+        private void SaveCSV(KundeCol col)
+        {
+            foreach (Kunde item in col)
+            {
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden\\" + item.Kundennummer + ".txt"))
+                {
+                    
+
+                    if (Object.ReferenceEquals(item.GetType(), new Kunde().GetType()))
+                    {
+                        sw.WriteLine(item.Kundennummer + ";" + item.Name + ";" + item.Alter + ";" + item.Berater.Name + ";0");
+                        sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
+                        if (item.Konto.Transaktionen != null)
+                        {
+
+
+                            foreach (Transaktion subitem in item.Konto.Transaktionen)
+                            {
+                                sw.WriteLine(subitem.Betrag + ";" + subitem.Art + ";" + subitem.Datum.Year + "." + subitem.Datum.Month + "." + subitem.Datum.Day + "." + subitem.Datum.Hour + "." + subitem.Datum.Minute);
+                            }
+                        }
+                    }
+                    if (Object.ReferenceEquals(item.GetType(), new GKunde().GetType()))
+                    {
+                        sw.WriteLine(item.Kundennummer + ";" + item.Name + ";" + item.Alter + ";" + item.Berater.Name + ";1");
+                        sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
+                        foreach (Transaktion subitem in item.Konto.Transaktionen)
+                        {
+                            sw.WriteLine(subitem.Betrag + ";" + subitem.Art + ";" + subitem.Datum.Year + "." + subitem.Datum.Month + "." + subitem.Datum.Day + "." + subitem.Datum.Hour + "." + subitem.Datum.Minute);
+
+                        }
+                    }
+                    sw.Close();
+                }
+            }
+        }
 
         public string N_ergebnis
         {
@@ -151,6 +182,82 @@ namespace BankWPF.ViewModels
 
 
 
+
+
+        public static KundeCol ReadCSV(ObservableCollection<Mitarbeiter> mcol)
+        {
+            KundeCol kcol = new KundeCol();
+            foreach (var file in (System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden")))
+            {
+                var filepath = file;
+                System.IO.StreamReader reader = new System.IO.StreamReader(filepath);
+                string line;
+                int row = 0;
+                bool isGK = false;
+                while ((line = reader.ReadLine()) != null)
+                {
+
+                        if (row == 1 && kcol.LastOrDefault().Kundennummer == Convert.ToInt32(filepath.Split('\\').Where(x => x.Contains('.')).LastOrDefault().Split('.').FirstOrDefault()))
+                        {
+                            kcol.LastOrDefault().Konto.ID = kcol.LastOrDefault().Kundennummer;
+                            kcol.LastOrDefault().Konto.Kontostand = (long)Convert.ToDouble(line.Split(';').LastOrDefault());
+
+
+                        }
+                        if (row > 1 && kcol.LastOrDefault().Kundennummer == Convert.ToInt32(filepath.Split('\\').Where(x => x.Contains('.')).LastOrDefault().Split('.').FirstOrDefault()))
+                        {
+                            kcol.LastOrDefault().Konto.Transaktionen.Add(new Transaktion(Convert.ToInt32(line.Split(';')[0]), line.Split(';')[1], line.Split(';')[2]));
+                        }
+                        if (row == 0)
+                        {
+
+
+                            if (line.Split(';')[4] == "0" && row == 0)
+                            {
+                                // Normaler Dude
+                                Kunde br = new Kunde()
+                                {
+                                    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                                    Name = line.Split(';')[1],
+                                    Alter = Convert.ToInt32(line.Split(';')[2]),
+                                    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                                    Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+
+                                };
+                                br.Konto.Transaktionen = new ObservableCollection<Transaktion>();
+                                kcol.Add(br);
+
+                            }
+                            else if (line.Split(';')[4] == "1" && row == 0)
+                            {
+                                GKunde br = new GKunde()
+                                {
+                                    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                                    Name = line.Split(';')[1],
+                                    Alter = Convert.ToInt32(line.Split(';')[2]),
+                                    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                                    Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+
+
+                                };
+                                isGK = true;
+                                br.Konto.Transaktionen = new ObservableCollection<Transaktion>();
+
+                                kcol.Add(br);
+
+                            }
+                        }
+                    
+
+                    row++;
+
+                }
+                reader.Close();
+                // Hier speichern
+                ;
+            }
+            return kcol;
+        }
     }
     }
 

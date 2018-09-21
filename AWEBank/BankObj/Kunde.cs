@@ -39,56 +39,7 @@ namespace BankObj
 
 
 
-        public static KundeCol ReadCSV(ObservableCollection<Mitarbeiter> mcol)
-        {
-            KundeCol kcol = new KundeCol();
-            foreach (var file in (System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden")))
-            {
-                var filepath = file;
-                System.IO.StreamReader reader = new System.IO.StreamReader(filepath);
-                string line;
-                int row = 0;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (row > 0) { continue; }
-                    if (line.Split(';')[4] == "0" && row == 0)
-                    {
-                        // Normaler Dude
-                        Kunde br = new Kunde()
-                        {
-                            Kundennummer = Convert.ToInt32(line.Split(';')[0]),
-                            Name = line.Split(';')[1],
-                            Alter = Convert.ToInt32(line.Split(';')[2]),
-                            Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
-                            Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
-
-                        };
-                        kcol.Add(br);
-                        row++;
-                    }
-                    else if (line.Split(';')[4] == "1" && row == 0)
-                    {
-                        GKunde br = new GKunde()
-                        {
-                            Kundennummer = Convert.ToInt32(line.Split(';')[0]),
-                            Name = line.Split(';')[1],
-                            Alter = Convert.ToInt32(line.Split(';')[2]),
-                            Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
-                            Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
-
-
-                        };
-                        kcol.Add(br);
-                        row++;
-                    }
-
-                }
-                reader.Close();
-                // Hier speichern
-                ;
-            }
-            return kcol;
-        }
+        
 
 
 
