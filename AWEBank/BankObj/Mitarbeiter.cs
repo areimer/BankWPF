@@ -15,6 +15,8 @@ namespace BankObj
         public String Name { get; set; }
         String filiale;
         public String Filiale { get; set; }
+        bool isGKB;
+        public bool IsGKB { get; set; }
 
 
 

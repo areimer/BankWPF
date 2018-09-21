@@ -9,12 +9,14 @@ namespace BankObj
 {
     public class Berater : Mitarbeiter
     {
+       
         public Berater() { }
-        public Berater(int manr, String name, String fil)
+        public Berater(int manr, String name, String fil, bool isgbk)
         {
-            this.Mitarrbeiternummer = manr;
-            this.Name = name;
-            this.Filiale = fil;
+            Mitarrbeiternummer = manr;
+            Name = name;
+            Filiale = fil;
+            IsGKB = isgbk;
         }
     }
 
@@ -31,8 +33,9 @@ namespace BankObj
         
         public GKBerater() :base()  { }
 
-        public GKBerater(int manr, String name, String fil) : base(manr,name,fil) {
+        public GKBerater(int manr, String name, String fil, bool isgkb) : base(manr,name,fil) {
             this.Kredite = new List<Kredit>();
+            IsGKB = isgkb;
         }
 
         public void KreditVergeben(int kreditId, Boolean genehmigt)
