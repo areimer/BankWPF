@@ -27,7 +27,7 @@ namespace BankWPF.ViewModels
         GKBerater newGAdvisor = new GKBerater();
         Kunde newKunde = new Kunde();
         GKunde newGKunde = new GKunde();
-        KundeCol kcol = new KundeCol();
+
 
 
 
@@ -54,9 +54,8 @@ namespace BankWPF.ViewModels
             KundenListe = new KundeCol();
             MitarbeiterListe = BeraterUebersichtViewViewModel.ReadCSV();
             KundenListe = Kunde.ReadCSV(MitarbeiterListe);
-            kcol = Kunde.ReadCSV(BeraterUebersichtViewViewModel.ReadCSV());
             N_ergebnis = "test";
-
+            N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
 
         }
 
@@ -88,56 +87,82 @@ namespace BankWPF.ViewModels
         private void OnAnlegenExecuted(object obj)
         {
             // Button Logik
-            int nextID = GetLastID(kcol) + 1;
+            int nextID = GetLastID(KundenListe) + 1;
             var test = N_name;
             test = N_name;
+            
 
-
-            Kunde neuer = new Kunde()
+            if (!N_gk)
             {
-                Alter = N_alter,
-                Name = N_name,
-                Kundennummer = nextID,
-                Konto = new Konto() { ID = nextID },
-                // Austauschen mit func
-                Berater = new Berater()
+
+
+                Kunde neuer = new Kunde()
                 {
-                    Name="Test Ber",
-                    Filiale="HH",
-                    Mitarrbeiternummer=4679
-                }
-                
-            };
+                    Alter = N_alter,
+                    Name = N_name,
+                    Kundennummer = nextID,
+                    Konto = new Konto() { ID = nextID },
+                    // Austauschen mit func
+                    Berater = N_mitarbeiter
+                };
+                KundenListe.Add(neuer);
+                N_ergebnis = neuer.ToString();
+            }
+            else
+            {
+                GKunde neuer = new GKunde()
+                {
+                    Alter = N_alter,
+                    Name = N_name,
+                    Kundennummer = nextID,
+                    Konto = new Konto() { ID = nextID },
+                    // Austauschen mit func
+                    Berater = N_mitarbeiter
+                };
 
 
-
-            N_ergebnis = neuer.ToString();
-
-
-
+                KundenListe.Add(neuer);
+                N_ergebnis = neuer.ToString();
+            }
 
 
+            
+            SaveCSV(KundenListe);
+           
 
-            //if (CustomerBusinessBox.IsChecked == true)
-            //{
-            //    int cnr = nextID; //naechste freie KDNR waehlen
-            //    int cage = Convert.ToInt32(CustomerAgeBox.Text); //Falscheingaben abfangen
-            //    bool cboni = false;
-            //    //newGAdvisor= Berater-ID aus menu lesen, GKunde nur mit GKBerater, zuweisen
-            //    if (CustomerBoniBox.IsChecked == true) { cboni = true; } else { cboni = false; } //Auswertung Bonitaet Checkbox
 
-            //    newGKunde = new GKunde(cnr, CustomerNameBox.Text, cage, cboni, new Konto(), newGAdvisor);
-            //    customerMessageBox.Text = newGKunde.ToString();
-            //}
-            //else
-            //{
-            //    int cnr = nextID; //naechste freie KDNR waehlen
-            //    int cage = Convert.ToInt32(CustomerAgeBox.Text); //Falscheingaben abfangen
-            //    newKunde = new Kunde(cnr, CustomerNameBox.Text, cage, new Konto(42)); //KontoID im Konto-Constructor automatisch
-            //    customerMessageBox.Text = newKunde.ToString();
-            //}
         }
 
+        private void SaveCSV(KundeCol col)
+        {
+            foreach (Kunde item in col)
+            {
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\kunden\\" + item.Kundennummer + "_t.txt"))
+                {
+                    
+
+                    if (Object.ReferenceEquals(item.GetType(), new Kunde().GetType()))
+                    {
+                        sw.WriteLine(item.Kundennummer + ";" + item.Name + ";" + item.Alter + ";" + item.Berater.Name + ";0");
+                        sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
+                        foreach (Transaktion subitem in item.Konto.Transaktionen)
+                        {
+                            sw.WriteLine();
+                        }
+                    }
+                    if (Object.ReferenceEquals(item.GetType(), new GKunde().GetType()))
+                    {
+                        sw.WriteLine(item.Kundennummer + ";" + item.Name + ";" + item.Alter + ";" + item.Berater.Name + ";1");
+                        sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
+                        foreach (Transaktion subitem in item.Konto.Transaktionen)
+                        {
+                            sw.WriteLine();
+                        }
+                    }
+                    sw.Close();
+                }
+            }
+        }
 
         public string N_ergebnis
         {

@@ -48,40 +48,72 @@ namespace BankObj
                 System.IO.StreamReader reader = new System.IO.StreamReader(filepath);
                 string line;
                 int row = 0;
+                bool isGK = false;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (row > 0) { continue; }
-                    if (line.Split(';')[4] == "0" && row == 0)
+                    try
                     {
-                        // Normaler Dude
-                        Kunde br = new Kunde()
-                        {
-                            Kundennummer = Convert.ToInt32(line.Split(';')[0]),
-                            Name = line.Split(';')[1],
-                            Alter = Convert.ToInt32(line.Split(';')[2]),
-                            Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
-                            Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
 
-                        };
-                        kcol.Add(br);
-                        row++;
-                    }
-                    else if (line.Split(';')[4] == "1" && row == 0)
+                    
+                    if (row == 1 && kcol.LastOrDefault().Kundennummer == Convert.ToInt32(filepath.Split('\\').Where(x=>x.Contains('.')).LastOrDefault().Split('.').FirstOrDefault()))
                     {
-                        GKunde br = new GKunde()
-                        {
-                            Kundennummer = Convert.ToInt32(line.Split(';')[0]),
-                            Name = line.Split(';')[1],
-                            Alter = Convert.ToInt32(line.Split(';')[2]),
-                            Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
-                            Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+                        kcol.LastOrDefault().Konto.ID = kcol.LastOrDefault().Kundennummer;
+                        kcol.LastOrDefault().Konto.Kontostand = (long)Convert.ToDouble(line.Split(';').LastOrDefault());
 
 
-                        };
-                        kcol.Add(br);
-                        row++;
                     }
+                    if (row > 1 && kcol.LastOrDefault().Kundennummer == Convert.ToInt32(filepath.Split('\\').Where(x => x.Contains('.')).LastOrDefault().Split('.').FirstOrDefault()))
+                    {
+                        kcol.LastOrDefault().Konto.Transaktionen.Add(new Transaktion(){
+                           Betrag = (long)Convert.ToDouble(line.Split(';')[0]),
+                           Art = line.Split(';')[1],
+                           Datum = new DateTimeOffset(Convert.ToInt32(line.Split(';')[2].Split('.')[0]), Convert.ToInt32(line.Split(';')[2].Split('.')[1]), Convert.ToInt32(line.Split(';')[2].Split('.')[2]), Convert.ToInt32(line.Split(';')[2].Split('.')[3]), Convert.ToInt32(line.Split(';')[2].Split('.')[4]), 0, new TimeSpan(0))
 
+                        });
+                    }
+                        if (row == 0)
+                        {
+
+
+                            if (line.Split(';')[4] == "0" && row == 0)
+                            {
+                                // Normaler Dude
+                                Kunde br = new Kunde()
+                                {
+                                    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                                    Name = line.Split(';')[1],
+                                    Alter = Convert.ToInt32(line.Split(';')[2]),
+                                    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                                    Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+
+                                };
+                                kcol.Add(br);
+
+                            }
+                            else if (line.Split(';')[4] == "1" && row == 0)
+                            {
+                                GKunde br = new GKunde()
+                                {
+                                    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                                    Name = line.Split(';')[1],
+                                    Alter = Convert.ToInt32(line.Split(';')[2]),
+                                    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                                    Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
+
+
+                                };
+                                isGK = true;
+                                kcol.Add(br);
+
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        
+                    }
+                    row++;
                 }
                 reader.Close();
                 // Hier speichern

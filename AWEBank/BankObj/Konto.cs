@@ -11,6 +11,7 @@ namespace BankObj
         int id;
         public int ID { get; set; }
         List<Transaktion> transaktionen;
+        public List<Transaktion> Transaktionen { get; set; }
         long kontostand;
         public long Kontostand { get; set; }
 

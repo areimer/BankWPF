@@ -27,11 +27,20 @@
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="26">Alter</TextBlock>
         <TextBox Text="{Binding N_alter, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" FontSize="26" Name="CustomerAgeBox"/>
         <TextBlock Grid.Row="2" Grid.Column="0" FontSize="26">Berater</TextBlock>
-        <Menu Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <MenuItem Header="Berater" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <MenuItem Header="Hier könnte ihr Berater stehen"></MenuItem>
-            </MenuItem>
-        </Menu>
+        <ComboBox ItemsSource="{Binding MitarbeiterListe}" Name="cmb" SelectedValue="{Binding N_mitarbeiter}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Column="1" Grid.Row="2">
+            <ComboBox.ItemTemplate>
+                <DataTemplate >
+                    <WrapPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Name}" FontSize="13" VerticalAlignment="Center"/>
+                        </Grid>
+                    </WrapPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <!-- <TextBox Grid.Row="2" Grid.Column="1"  FontSize="26" Name="CustomerAdvisorBox"/> -->
         <TextBlock Grid.Row="3" Grid.Column="0" FontSize="26">Geschäftskunde</TextBlock>
         <CheckBox  IsChecked="{Binding N_gk, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
