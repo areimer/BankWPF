@@ -58,6 +58,7 @@
     <Compile Include="ViewModels\BeraterUebersichtViewViewModel.cs" />
     <Compile Include="ViewModels\KundenAnlegenViewViewModel.cs" />
     <Compile Include="ViewModels\BeraterViewViewModel.cs" />
+    <Compile Include="ViewModels\KundenLoginViewViewModel.cs" />
     <Compile Include="ViewModels\KundenUebersichtViewViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -66,6 +67,9 @@
     </Compile>
     <Compile Include="Views\CustomerView.xaml.cs">
       <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KundenLoginView.xaml.cs">
+      <DependentUpon>KundenLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\KundenUebersichtView.xaml.cs">
       <DependentUpon>KundenUebersichtView.xaml</DependentUpon>
@@ -95,6 +99,10 @@
     <Page Include="Views\CustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\KundenLoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\KundenUebersichtView.xaml">
       <SubType>Designer</SubType>

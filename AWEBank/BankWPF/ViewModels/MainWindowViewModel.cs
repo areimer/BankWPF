@@ -12,7 +12,7 @@ using System.Drawing;
 
 namespace BankWPF.ViewModels
 {
-    class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         /* MainWindow Properties */
         private UIElement _content = new MainView();
@@ -21,6 +21,7 @@ namespace BankWPF.ViewModels
         public ICommand ClickCustomerCreationCommand { get; set; }
         public ICommand ClickKundenUebersichtCommand { get; set; }
         public ICommand ClickBeraterCommand { get; set; }
+        public ICommand ClickKundenLoginCommand { get; set; }
         public ICommand ClickBeraterUebersichtCommand { get; set; }
         public ICommand BackToMain { get; set; }
 
@@ -33,8 +34,8 @@ namespace BankWPF.ViewModels
 
         /* MainWindow Konstruktor */
         public MainWindowViewModel()
-        {      
-            
+        {
+            ClickKundenLoginCommand = new ActionCommand(loadKundenLoginView, _ => Content is MainView);
             ClickCustomerCreationCommand = new ActionCommand(loadTeamView, _ => Content is MainView);            
             ClickKundenUebersichtCommand = new ActionCommand(loadKundenUebersichtView, _ => Content is MainView);
             ClickBeraterCommand = new ActionCommand(loadBeraterView, _ => Content is MainView);
@@ -52,7 +53,12 @@ namespace BankWPF.ViewModels
         {
             Content = new KundenUebersichtView();
         }
-     
+
+        public void loadKundenLoginView(Object param)
+        {
+            Content = new KundenLoginView();
+        }
+
         public void loadBeraterView(Object param)
         {
             Content = new BeraterView();

@@ -54,7 +54,7 @@ namespace BankWPF.ViewModels
             KundenListe = new KundeCol();
             MitarbeiterListe = BeraterUebersichtViewViewModel.ReadCSV();
             KundenListe = ReadCSV(MitarbeiterListe);
-            N_ergebnis = "test";
+            N_ergebnis = "";
             N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
 
         }

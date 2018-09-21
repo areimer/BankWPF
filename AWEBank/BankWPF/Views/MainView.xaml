@@ -107,7 +107,7 @@
                 </Button.Style>
             </Button>
             
-            <Button Name="btnKundenUebersicht" Grid.Row="1" Grid.Column="1" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickKundenUebersichtCommand}">
+            <Button Name="btnKundenUebersicht" Grid.Row="1" Grid.Column="1" FontSize="36" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClickKundenLoginCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="DarkBlue"/>

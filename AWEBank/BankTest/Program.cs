@@ -21,7 +21,7 @@ namespace BankTest
             K.Konto.TransaktionTaetigen("ein", 500);
             Console.WriteLine(K.Konto.Kontostand);
             //Beraternamen des Kunden K ausgeben
-            Console.WriteLine(K.Adv.Name);
+            Console.WriteLine(K.Berater.Name);
             //GKunde GK Kreditanfordern und ausgeben
             GK.KreditAnfordern(1000, 12,new DateTimeOffset());
             Console.WriteLine(GKB.Kredite[0]);
