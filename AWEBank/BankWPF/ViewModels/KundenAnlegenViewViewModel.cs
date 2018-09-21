@@ -159,10 +159,19 @@ namespace BankWPF.ViewModels
                     {
                         sw.WriteLine(item.Kundennummer + ";" + item.Name + ";" + item.Alter + ";" + item.Berater.Name + ";1");
                         sw.WriteLine(item.Konto.ID + ";" + item.Konto.Kontostand);
-                        foreach (Transaktion subitem in item.Konto.Transaktionen)
+                        if (item.Konto.Transaktionen == null)
                         {
-                            sw.WriteLine(subitem.Betrag + ";" + subitem.Art + ";" + subitem.Datum.Year + "." + subitem.Datum.Month + "." + subitem.Datum.Day + "." + subitem.Datum.Hour + "." + subitem.Datum.Minute);
 
+                        }
+                        else
+                        {
+
+
+                            foreach (Transaktion subitem in item.Konto.Transaktionen)
+                            {
+                                sw.WriteLine(subitem.Betrag + ";" + subitem.Art + ";" + subitem.Datum.Year + "." + subitem.Datum.Month + "." + subitem.Datum.Day + "." + subitem.Datum.Hour + "." + subitem.Datum.Minute);
+
+                            }
                         }
                     }
                     sw.Close();
