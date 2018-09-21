@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BankObj;
+using System.Collections.ObjectModel;
 
 namespace BankObj
 {
@@ -26,13 +27,13 @@ namespace BankObj
 
     public class GKBerater : Mitarbeiter
     {
-        List<Kredit> kredite;
-        public List<Kredit> Kredite { get; set; }
+        ObservableCollection<Kredit> kredite;
+        public ObservableCollection<Kredit> Kredite { get; set; }
         
         public GKBerater() :base()  { }
 
         public GKBerater(int manr, String name, String fil) : base(manr,name,fil) {
-            this.Kredite = new List<Kredit>();
+            this.Kredite = new ObservableCollection<Kredit>();
         }
 
         public void KreditVergeben(int kreditId, Boolean genehmigt)

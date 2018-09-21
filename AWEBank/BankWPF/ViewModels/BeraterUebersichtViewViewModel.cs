@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BankObj;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace BankWPF.ViewModels
 {
@@ -87,31 +88,54 @@ namespace BankWPF.ViewModels
                 int row = 0;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (line.Split(';')[3] == "0" && row == 0)
+                    var tester = line;
+                    if (row == 0)
                     {
-                        // Normaler Dude
-                        Berater br = new Berater()
-                        {
-                            Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
-                            Name = line.Split(';')[1],
-                            Filiale = line.Split(';')[2],
 
-                        };
-                        bcol.Add(br);
-                        row++;
+
+                        if (line.Split(';')[3] == "0" && row == 0)
+                        {
+                            // Normaler Dude
+                            Berater br = new Berater()
+                            {
+                                Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
+                                Name = line.Split(';')[1],
+                                Filiale = line.Split(';')[2],
+
+                            };
+                            bcol.Add(br);
+
+                        }
+                        else if (line.Split(';')[3] == "1" && row == 0)
+                        {
+                            //GKDude
+                            GKBerater br = new GKBerater()
+                            {
+                                Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
+                                Name = line.Split(';')[1],
+                                Filiale = line.Split(';')[2],
+                                Kredite = new ObservableCollection<Kredit>()
+                            };
+                            bcol.Add(br);
+                        }
                     }
-                    else if (line.Split(';')[3] == "1" && row == 0)
+                    else if (row > 0)
                     {
-                        GKBerater br = new GKBerater()
+                        var test = tester;
+                        (bcol.LastOrDefault() as GKBerater).Kredite.Add(new Kredit()
                         {
-                            Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
-                            Name = line.Split(';')[1],
-                            Filiale = line.Split(';')[2],
+                            Id = Convert.ToInt32(line.Split(';')[0]),
+                            Betrag = Convert.ToInt32(line.Split(';')[1]),
+                            LaufzeitMonate = Convert.ToInt32(line.Split(';')[2]),
+                            Zinssatz = Convert.ToInt32(line.Split(';')[3]),
+                            StartDatum = new DateTimeOffset(Convert.ToInt32(line.Split(';')[4].Split('.')[0]), Convert.ToInt32(line.Split(';')[4].Split('.')[1]), Convert.ToInt32(line.Split(';')[4].Split('.')[2]), Convert.ToInt32(line.Split(';')[4].Split('.')[3]), Convert.ToInt32(line.Split(';')[4].Split('.')[4]), 0, new TimeSpan(0)),
+                            Status = line.Split(';')[6],
+                            Tilgungsrate = Convert.ToDouble(line.Split(';')[5])
+                        });
 
-                        };
-                        bcol.Add(br);
-                        row++;
+
                     }
+                    row++;
 
                 }
                 reader.Close();
@@ -119,6 +143,35 @@ namespace BankWPF.ViewModels
                 ;
             }
             return bcol;
+        }
+
+
+        public static void SaveCSV(ObservableCollection<Mitarbeiter> mcol)
+        {
+            foreach (Mitarbeiter item in mcol)
+            {
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater\\" + item.Mitarrbeiternummer + "_t.txt"))
+                {
+
+
+                    if (Object.ReferenceEquals(item.GetType(), new Berater().GetType()))
+                    {
+                        sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";0");
+                        
+                    }
+                    if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
+                    {
+                        sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";0");
+                        foreach (Kredit subitem in (item as GKBerater).Kredite)
+                        {
+                            sw.WriteLine(subitem.Betrag + ";" + subitem.Betrag + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute);
+
+                        }
+                    }
+                    sw.Close();
+                }
+            }
+
         }
     }
 }
