@@ -29,7 +29,7 @@ namespace BankObj
             this.Name = name;
             this.Alter = alter;
             this.Konto = k;
-            //this.Adv = b;
+            this.Berater = b;
         }
 
 
