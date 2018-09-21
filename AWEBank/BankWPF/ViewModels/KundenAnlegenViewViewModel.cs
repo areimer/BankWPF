@@ -13,13 +13,14 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.Threading;
+using BankWPF.ViewModels;
 using BankWPF.Commands;
 
 namespace BankWPF.ViewModels
 {
     class KundenAnlegenViewViewModel : ViewModelBase
     {
-        public MitarbeiterCol MitarbeiterListe { get; set; }
+        public ObservableCollection<Mitarbeiter> MitarbeiterListe { get; set; }
         public KundeCol KundenListe { get; set; }
         public ICommand AnlegenCommand { get; private set; }
         Berater newAdvisor = new Berater();
@@ -50,11 +51,10 @@ namespace BankWPF.ViewModels
         public  KundenAnlegenViewViewModel()
         {
             AnlegenCommand = new ActionCommand(OnAnlegenExecuted, OnAnlegenCanExecute);
-            MitarbeiterListe = new MitarbeiterCol();
             KundenListe = new KundeCol();
-            MitarbeiterListe = Mitarbeiter.ReadCSV();
+            MitarbeiterListe = BeraterUebersichtViewViewModel.ReadCSV();
             KundenListe = Kunde.ReadCSV(MitarbeiterListe);
-            kcol = Kunde.ReadCSV(Mitarbeiter.ReadCSV());
+            kcol = Kunde.ReadCSV(BeraterUebersichtViewViewModel.ReadCSV());
             N_ergebnis = "test";
 
 
