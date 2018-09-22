@@ -12,7 +12,6 @@
     </UserControl.Resources>
     <Grid DataContext="{StaticResource KundenLoginViewViewModel}">
         <StackPanel VerticalAlignment="Center" Visibility="{Binding Vorlogin}">
-
             <Label HorizontalAlignment="Center" FontSize="20">Name</Label>
             <TextBox Margin="0,5,0,0" FontSize="20" Height="32" Width="250" Text="{Binding L_name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="20">PIN</Label>
@@ -25,24 +24,94 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock FontSize="20" Text="Name"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Kudennummer"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Alter"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Berater"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="Kontonummer"></TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock FontSize="20" Text="{Binding Kunde.Name}"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Kundennummer}"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Alter}"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Berater.Name}"></TextBlock>
-                <TextBlock Margin="0,25,0,0" FontSize="20" Text="{Binding Kunde.Konto.ID}"></TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Column="2" Grid.Row="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="1" FontSize="20" Text="Name"></TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="2" FontSize="20" Text="Kudennummer"></TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="20" Text="Alter"></TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="4" FontSize="20" Text="Berater"></TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="5" FontSize="20" Text="Kontonummer"></TextBlock>
+                <ListBox Grid.Column="0" Grid.Row="6" FontSize="20" Grid.RowSpan="2" SelectedItem="{Binding SelectedAction}">
+                    <ListBoxItem>Auszahlen</ListBoxItem>
+                    <ListBoxItem>Überweisen</ListBoxItem>
+                    <ListBoxItem>Einzahlen</ListBoxItem>
+                </ListBox>
+                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Text="{Binding Kunde.Name}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="2" FontSize="20" Text="{Binding Kunde.Kundennummer}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="3" FontSize="20" Text="{Binding Kunde.Alter}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="4" FontSize="20" Text="{Binding Kunde.Berater.Name}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="5" FontSize="20" Text="{Binding Kunde.Konto.ID}"></TextBlock>
+                <Grid Grid.Column="1" Grid.Row="6" Grid.RowSpan="2" Visibility="{Binding ShowActionAuszahlen}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0" Text="Betrag:"></TextBlock>
+                    <ComboBox HorizontalAlignment="Center" Height="30" Width="100" Grid.Column="0" Grid.Row="0" FontSize="16" Grid.RowSpan="2" SelectedItem="{Binding SelectedAuszahlenBetrag}" SelectedIndex="0">
+                        <ListBoxItem HorizontalAlignment="Right">5</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">10</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">50</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">100</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">200</ListBoxItem>
+                    </ComboBox>
+                    <Button Grid.Column="1" HorizontalAlignment="Left" FontSize="20" Height="30" Width="100" VerticalAlignment="Center" Command="{Binding ActionCommandAuszahlen}">Auszahlen</Button>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="6" Grid.RowSpan="2" Visibility="{Binding ShowActionEinzahlen}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0" Text="Betrag:"></TextBlock>
+                    <ComboBox HorizontalAlignment="Center" Height="30" Width="100" Grid.Column="0" Grid.Row="0" FontSize="16" Grid.RowSpan="2" SelectedItem="{Binding SelectedEinzahlenBetrag}" SelectedIndex="0">
+                        <ListBoxItem HorizontalAlignment="Right">5</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">10</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">50</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">100</ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Right">200</ListBoxItem>
+                    </ComboBox>
+                    <Button Grid.Column="1" HorizontalAlignment="Left" FontSize="20" Height="30" Width="100" VerticalAlignment="Center" Command="{Binding ActionCommandEinzahlen}">Einzahlen</Button>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="6" Grid.RowSpan="3" Visibility="{Binding ShowActionÜberweisen}" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0" Text="Betrag:"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="2" Text="Empfänger:"></TextBlock>
+                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" Grid.Column="0" Grid.Row="1" FontSize="16" Text="{Binding SelectedÜberweisenBetrag}"/>
+                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" Grid.Column="0" Grid.Row="3" FontSize="16" Text="{Binding SelectedÜberweisenEmpfänger}"/>
+                    <Button  VerticalAlignment="Center" Height="30" Margin="0,24,0,0" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" FontSize="20" Width="150" Command="{Binding ActionCommandÜberweisen}">Überweisen</Button>
+                </Grid>
+            </Grid>
+            <StackPanel Grid.Column="1" Grid.Row="0">
                 <TextBlock FontSize="20" Text="Transaktionshistorie"></TextBlock>
                 <DataGrid  ItemsSource="{Binding Kunde.Konto.Transaktionen}" FontSize="20" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                     <DataGrid.Columns>

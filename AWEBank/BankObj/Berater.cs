@@ -19,12 +19,6 @@ namespace BankObj
         }
     }
 
-
-
-
-
-
-
     public class GKBerater : Mitarbeiter
     {
         ObservableCollection<Kredit> kredite;

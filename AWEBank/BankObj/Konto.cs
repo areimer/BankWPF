@@ -17,7 +17,11 @@ namespace BankObj
         long kontostand;
         public long Kontostand { get; set; }
 
-        public Konto() { }
+        public Konto()
+        {
+            this.Transaktionen = new ObservableCollection<Transaktion>();
+            this.kontostand = 0;
+        }
 
         public Konto(int id)
         {
