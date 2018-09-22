@@ -107,8 +107,8 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock HorizontalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0" Text="Betrag:"></TextBlock>
                     <TextBlock HorizontalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="2" Text="Empfänger:"></TextBlock>
-                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" Grid.Column="0" Grid.Row="1" FontSize="16" Text="{Binding SelectedÜberweisenBetrag}"/>
-                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" Grid.Column="0" Grid.Row="3" FontSize="16" Text="{Binding SelectedÜberweisenEmpfänger}"/>
+                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" Grid.Column="0" Grid.Row="1" FontSize="16" Text="{Binding SelectedÜberweisenBetrag, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" Grid.Column="0" Grid.Row="3" FontSize="16" Text="{Binding SelectedÜberweisenEmpfänger, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button  VerticalAlignment="Center" Height="30" Margin="0,24,0,0" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" FontSize="20" Width="150" Command="{Binding ActionCommandÜberweisen}">Überweisen</Button>
                 </Grid>
             </Grid>
