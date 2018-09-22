@@ -36,9 +36,22 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="Auto" Header="Kunde" Binding="{Binding Kundennummer}"/>
                     <DataGridTextColumn Width="Auto" Header="Geschäftskunde" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Width="Auto" Header="Kredithöhe" Binding="{Binding Alter}"/>
+                    <DataGridTextColumn Width="Auto" Header="Alter" Binding="{Binding Alter}"/>
                     <DataGridTextColumn Width="Auto" Header="Berater" Binding="{Binding Berater.Name}"/>
                     <DataGridTextColumn Width="Auto" Header="KontoStand" Binding="{Binding Konto.Kontostand}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="3" Grid.Column="0"  Margin="25,25,25,25" Opacity="0.9">
+            <DataGrid Name="BeraterKundenKrediteGrid" ItemsSource="{Binding KreditListe}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Width="Auto" Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn  Width="Auto" Header="Betrag" Binding="{Binding Betrag}"/>
+                    <DataGridTextColumn  Width="Auto" Header="Laufzeit (Monate)" Binding="{Binding LaufzeitMonate}"/>
+                    <DataGridTextColumn  Width="Auto" Header="Zinssatz" Binding="{Binding Zinssatz}"/>
+                    <DataGridTextColumn  Width="Auto" Header="Datum" Binding="{Binding StartDatum}" HeaderStringFormat=""/>
+                    <DataGridTextColumn  Width="Auto" Header="Tilgung" Binding="{Binding Tilgungsrate}"/>
+                    <DataGridTextColumn  Width="Auto" Header="Status" Binding="{Binding Status}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

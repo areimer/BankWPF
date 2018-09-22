@@ -13,6 +13,7 @@ namespace BankWPF.ViewModels
     {
         public ObservableCollection<Mitarbeiter> BeraterListe { get; set; }
         public KundeCol KundenListe { get; set; }
+        public KreditCol KreditListe { get; set; }
         private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
 
@@ -21,6 +22,8 @@ namespace BankWPF.ViewModels
         {
             BeraterListe = LoadBeraterData();
             KundenListe = new KundeCol();
+            KreditListe = new KreditCol();
+            KreditListe.Add(new BankObj.Kredit(775, 500, 12, 0, new DateTime(), 0, "wartend"));
             foreach (Kunde item in LoadKundenData())
             {
                 KundenListe.Add(item);
@@ -58,6 +61,7 @@ namespace BankWPF.ViewModels
             set
             {
                 selectedKunde = value;
+                
                 OnPropertyChanged("SelectedKunde");
             }
         }
@@ -128,7 +132,7 @@ namespace BankWPF.ViewModels
                             Betrag = Convert.ToInt32(line.Split(';')[1]),
                             LaufzeitMonate = Convert.ToInt32(line.Split(';')[2]),
                             Zinssatz = Convert.ToInt32(line.Split(';')[3]),
-                            StartDatum = new DateTimeOffset(Convert.ToInt32(line.Split(';')[4].Split('.')[0]), Convert.ToInt32(line.Split(';')[4].Split('.')[1]), Convert.ToInt32(line.Split(';')[4].Split('.')[2]), Convert.ToInt32(line.Split(';')[4].Split('.')[3]), Convert.ToInt32(line.Split(';')[4].Split('.')[4]), 0, new TimeSpan(0)),
+                            StartDatum = new DateTime(),
                             Status = line.Split(';')[6],
                             Tilgungsrate = Convert.ToDouble(line.Split(';')[5])
                         });

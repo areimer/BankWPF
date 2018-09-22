@@ -32,24 +32,6 @@ namespace BankObj
             this.Berater = b;
         }
 
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
         public Kunde(int kdnr, String name, int alter, Konto k) {
             this.Kundennummer = kdnr;
             this.Name = name;
@@ -82,12 +64,12 @@ namespace BankObj
         }
 
         //GKunde fordert Kredit an und legt ihn als "wartend" bei seinem Berater ab
-        public void KreditAnfordern(long betrag, int laufzeitMonate, DateTimeOffset start)
+        public void KreditAnfordern(long betrag, int laufzeitMonate, DateTime start)
         {
             // id generieren
             int tId = 0;
             //Kredit beim zustaendigen Berater einlisten
-            this.Adv.Kredite.Add(new Kredit(tId, betrag,0, laufzeitMonate, start,0,"wartend"));
+            this.Adv.Kredite.Add(new Kredit(tId, betrag,laufzeitMonate, 0, start,0,"wartend"));
         }
 
         public override String ToString()
