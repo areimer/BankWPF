@@ -22,6 +22,7 @@ namespace BankWPF.ViewModels
         Kunde kunde;
         String selectedAction;
         ObservableCollection<Kunde> kcol;
+        ObservableCollection<Mitarbeiter> mcol;
         public string L_password
         {
             get { return l_password; }
@@ -103,6 +104,15 @@ namespace BankWPF.ViewModels
                 OnPropertyChanged("ShowActionÜberweisen");
             }
         }
+        public String ShowActionKreditBeantragen
+        {
+            get { return showActionKreditBeantragen; }
+            set
+            {
+                showActionKreditBeantragen = value;
+                OnPropertyChanged("ShowActionKreditBeantragen");
+            }
+        }
         public String SelectedAction
         {
             get { return selectedAction; }
@@ -115,32 +125,77 @@ namespace BankWPF.ViewModels
                     ShowActionAuszahlen = "Hidden";
                     ShowActionEinzahlen = "Visible";
                     ShowActionÜberweisen = "Hidden";
+                    ShowActionKreditBeantragen = "Hidden";
                 }
                 if (SelectedAction.Contains("Auszahlen"))
                 {
                     ShowActionAuszahlen = "Visible";
                     ShowActionEinzahlen = "Hidden";
                     ShowActionÜberweisen = "Hidden";
+                    ShowActionKreditBeantragen = "Hidden";
                 }
                 if (SelectedAction.Contains("Überweisen"))
                 {
                     ShowActionAuszahlen = "Hidden";
                     ShowActionEinzahlen = "Hidden";
                     ShowActionÜberweisen = "Visible";
+                    ShowActionKreditBeantragen = "Hidden";
+                }
+                if (SelectedAction.Contains("Kredit"))
+                {
+                    ShowActionAuszahlen = "Hidden";
+                    ShowActionEinzahlen = "Hidden";
+                    ShowActionÜberweisen = "Hidden";
+                    ShowActionKreditBeantragen = "Visible";
                 }
                 OnPropertyChanged("ShowActionEinzahlen");
                 OnPropertyChanged("ShowActionÜberweisen");
                 OnPropertyChanged("ShowActionAuszahlen");
+                OnPropertyChanged("ShowActionKreditBeantragen");
             }
         }
-       String showActionAuszahlen;
-       String showActionÜberweisen;
-       String showActionEinzahlen;
+        public String SelectedEinzahlenBetrag
+        {
+            get { return selectedEinzahlenBetrag; }
+            set
+            {
+                selectedEinzahlenBetrag = value;
+                OnPropertyChanged("SelectedEinzahlenBetrag");
+            }
+        }
+        public String SelectedAuszahlenBetrag
+        {
+            get { return selectedAuszahlenBetrag; }
+            set
+            {
+                selectedAuszahlenBetrag = value;
+                OnPropertyChanged("SelectedAuszahlenBetrag");
+            }
+        }
+        String showActionAuszahlen;
+        String showActionÜberweisen;
+        String showActionEinzahlen;
+        String showActionKreditBeantragen;
+        String selectedEinzahlenBetrag;
+        String selectedAuszahlenBetrag;
+        public ICommand ActionCommandEinzahlen { get; set; }
+        public ICommand ActionCommandAuszahlen { get; set; }
+
+
+
+
+
 
 
 
         public KundenLoginViewViewModel()
         {
+            mcol = BeraterUebersichtViewViewModel.ReadCSV();
+            Kcol = KundenAnlegenViewViewModel.ReadCSV(mcol);
+            Kunde = Kcol.FirstOrDefault();
+            ActionCommandAuszahlen = new ActionCommand(OnAuszahlenExecute, OnAuszahlenCanExecute);
+            ActionCommandEinzahlen = new ActionCommand(OnEinzahlenExecute, OnEinzahlenCanExecute);
+            LoginCommand = new ActionCommand(OnLoginExecuted, OnLoginCanExecute);
             L_password = "";
             L_name = "";
             Vorlogin = "Visible";
@@ -148,15 +203,52 @@ namespace BankWPF.ViewModels
             ShowActionAuszahlen = "Hidden";
             ShowActionÜberweisen = "Hidden";
             ShowActionEinzahlen = "Hidden";
-            Kcol = KundenAnlegenViewViewModel.ReadCSV(BeraterUebersichtViewViewModel.ReadCSV());
-            Kunde = Kcol.FirstOrDefault();
-            LoginCommand = new ActionCommand(OnLoginExecuted, OnLoginCanExecute);
+            showActionKreditBeantragen = "Hidden";
         }
 
-
-
-
-
+        // Auszahlen Button
+        private bool OnAuszahlenCanExecute(object arg)
+        {
+            //foreach (Mitarbeiter item in mcol)
+            //{
+            //   if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
+            //   {
+            //        if (((GKBerater)item).Kredite.Count(x => x.Id == Kunde.Kundennummer && x.Status == "wartend") > 0)
+            //        {
+            //            return false;
+            //        }
+            //   }
+            //}
+            if (Kunde.Konto.Kontostand >= Convert.ToInt32(SelectedAuszahlenBetrag.Split(':')[1]))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private void OnAuszahlenExecute(object obj)
+        {
+            Transaktion trans = new Transaktion(Convert.ToInt64(SelectedAuszahlenBetrag.Split(':')[1]), "Ausgezahlt");
+            Kunde.Konto.Transaktionen.Add(trans);
+            Kunde.Konto.Kontostand -= Convert.ToInt64(SelectedAuszahlenBetrag.Split(':')[1]);
+            OnPropertyChanged("Kunde");
+            KundenAnlegenViewViewModel.SaveCSV(kcol);
+        }
+        // Einzahlen Button
+        private bool OnEinzahlenCanExecute(object arg)
+        {
+            return true;
+        }
+        private void OnEinzahlenExecute(object obj)
+        {
+            Transaktion trans = new Transaktion(Convert.ToInt64(SelectedEinzahlenBetrag.Split(':')[1]), "Eingezahlt");
+            Kunde.Konto.Transaktionen.Add(trans);
+            Kunde.Konto.Kontostand += Convert.ToInt64(SelectedEinzahlenBetrag.Split(':')[1]);
+            OnPropertyChanged("Kunde");
+            KundenAnlegenViewViewModel.SaveCSV(kcol);
+        }
         // Löschen Button
         private bool OnLoginCanExecute(object arg)
         {
@@ -167,7 +259,7 @@ namespace BankWPF.ViewModels
             Kcol = KundenAnlegenViewViewModel.ReadCSV(BeraterUebersichtViewViewModel.ReadCSV());
             if (Kcol.Where(x => x.Name == l_name).Count() == 0)
             {
-               
+
             }
             else
             {

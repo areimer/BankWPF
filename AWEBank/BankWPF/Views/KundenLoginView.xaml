@@ -44,17 +44,18 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="1" FontSize="20" Text="Name"></TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="2" FontSize="20" Text="Kudennummer"></TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="20" Text="Alter"></TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="20" Text="Kontostand"></TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="4" FontSize="20" Text="Berater"></TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="5" FontSize="20" Text="Kontonummer"></TextBlock>
-                <ListBox Grid.Column="0" Grid.Row="6" FontSize="20" Grid.RowSpan="2" SelectedItem="{Binding SelectedAction}">
+                <ListBox VerticalAlignment="Top" Height="130" Grid.Column="0" Grid.Row="6" FontSize="20" Grid.RowSpan="3" SelectedItem="{Binding SelectedAction}">
                     <ListBoxItem>Auszahlen</ListBoxItem>
                     <ListBoxItem>Überweisen</ListBoxItem>
                     <ListBoxItem>Einzahlen</ListBoxItem>
+                    <ListBoxItem>Kredit Anfragen</ListBoxItem>
                 </ListBox>
                 <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Text="{Binding Kunde.Name}"></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="2" FontSize="20" Text="{Binding Kunde.Kundennummer}"></TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="3" FontSize="20" Text="{Binding Kunde.Alter}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="3" FontSize="20" Text="{Binding Kunde.Konto.Kontostand}"></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="4" FontSize="20" Text="{Binding Kunde.Berater.Name}"></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="5" FontSize="20" Text="{Binding Kunde.Konto.ID}"></TextBlock>
                 <Grid Grid.Column="1" Grid.Row="6" Grid.RowSpan="2" Visibility="{Binding ShowActionAuszahlen}">
@@ -113,7 +114,7 @@
             </Grid>
             <StackPanel Grid.Column="1" Grid.Row="0">
                 <TextBlock FontSize="20" Text="Transaktionshistorie"></TextBlock>
-                <DataGrid  ItemsSource="{Binding Kunde.Konto.Transaktionen}" FontSize="20" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid MaxHeight="650" VerticalScrollBarVisibility="Visible"  ItemsSource="{Binding Kunde.Konto.Transaktionen}" FontSize="20" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="Auto" Header="Datum" Binding="{Binding Cleandate}"/>
                         <DataGridTextColumn Width="Auto" Header="Betrag" Binding="{Binding Betrag}"/>

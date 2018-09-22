@@ -84,8 +84,8 @@ namespace BankWPF.ViewModels
                 };
                 mcol.Add(neuerB);
             }
-            //Noch nicht von Otto implementiert scheiße
-            //BeraterUebersichtViewViewModel.SaveCSV(mcol);
+
+            BeraterUebersichtViewViewModel.SaveCSV(mcol);
         }
     }
 }
