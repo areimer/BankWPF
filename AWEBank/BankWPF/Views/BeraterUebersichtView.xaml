@@ -32,7 +32,7 @@
             </DataGrid>
         </Grid>
         <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="1" Grid.Column="1"  Margin="25,25,25,25" Opacity="0.9">
-            <DataGrid Name="BeraterKundenGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde}" IsReadOnly="True" Height="Auto" Width="Auto" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid Name="BeraterKundenGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Height="Auto" Width="Auto" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="Auto" Header="Kunde" Binding="{Binding Kundennummer}"/>
                     <DataGridTextColumn Width="Auto" Header="Geschäftskunde" Binding="{Binding Name}"/>
@@ -43,7 +43,7 @@
             </DataGrid>
         </Grid>
         <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="3" Grid.Column="0"  Margin="25,25,25,25" Opacity="0.9">
-            <DataGrid Name="BeraterKundenKrediteGrid" ItemsSource="{Binding KreditListe}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid Name="BeraterKundenKrediteGrid" Visibility="{Binding ShowCredit}" ItemsSource="{Binding KreditListe}" SelectedItem="{Binding SelectedKredit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn  Width="Auto" Header="ID" Binding="{Binding Id}"/>
                     <DataGridTextColumn  Width="Auto" Header="Betrag" Binding="{Binding Betrag}"/>
@@ -55,6 +55,19 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Button Grid.Row="3" Grid.Column="1" Margin="25" Name="btnDeleteSelectedEntry" Content="Löschen" Height="40" Width="Auto" HorizontalAlignment="Right"></Button>  
+        <Grid Grid.Row="3" Grid.Column="1" DataContext="{StaticResource BeraterUebersichtViewViewModel}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="25" Visibility="{Binding ShowCredit}">
+                <Button Name="btnDenieCredit" Command="{Binding DenieCommand}">Kredit ablehnen</Button>
+                <Button Name="btnAcceptCredit" Command="{Binding AcceptCommand}">Kredit genehmigen</Button>
+            </StackPanel>
+            <Button Grid.Row="0" Grid.Column="1" Margin="25" Name="btnDeleteSelectedEntry" Content="Löschen" Height="40" Width="Auto" HorizontalAlignment="Right"></Button>
+        </Grid>
     </Grid>
 </UserControl>

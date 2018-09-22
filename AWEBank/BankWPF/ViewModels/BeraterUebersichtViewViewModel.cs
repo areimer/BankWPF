@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BankObj;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Input;
+using BankWPF.Commands;
 
 namespace BankWPF.ViewModels
 {
@@ -16,6 +18,19 @@ namespace BankWPF.ViewModels
         public KreditCol KreditListe { get; set; }
         private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
+        private Kredit selectedKredit;
+        private String showCredit;
+        public String ShowCredit
+        {
+            get { return showCredit; }
+            set
+            {
+                showCredit = value;
+                OnPropertyChanged("ShowCredit");
+            }
+        }
+        public ICommand DenieCommand { get; private set; }
+        public ICommand AcceptCommand { get; private set; }
 
         /* Konstruktor */
         public BeraterUebersichtViewViewModel()
@@ -24,12 +39,16 @@ namespace BankWPF.ViewModels
             KundenListe = new KundeCol();
             KreditListe = new KreditCol();
             KreditListe.Add(new BankObj.Kredit(775, 500, 12, 0, new DateTime(), 0, "wartend"));
+            ShowCredit = "Hidden";
+            AcceptCommand = new ActionCommand(OnAcceptExecuted, OnAcceptCanExecute);
+            DenieCommand = new ActionCommand(OnDenieExecuted, OnDenieCanExecute);
             foreach (Kunde item in LoadKundenData())
             {
                 KundenListe.Add(item);
             }
-            //Neuen, leeren Berater als Default setzen
+            //Neuen, leeren Berater und Kunde als Default setzen
             SelectedBerater = new Berater();
+            SelectedKunde = new Kunde();
         }
 
         /* SelectedBerater Getter und Setter */
@@ -39,8 +58,9 @@ namespace BankWPF.ViewModels
             set
             {
                 selectedBerater = value;
+                SelectedKunde = new Kunde();
                 KundenListe = new KundeCol();
-                // Betanke Kundenliste nur mit den kuden, die den berater auch haben.
+                // Betanke Kundenliste nur mit den kunden, die den berater auch haben.
                 foreach (Kunde item in LoadKundenData())
                 {
                     if (item.Berater.Mitarrbeiternummer == selectedBerater.Mitarrbeiternummer)
@@ -52,6 +72,7 @@ namespace BankWPF.ViewModels
                 // Damit das Property den Inotify Interface shit triggert und das UI es mitkriegt
                 OnPropertyChanged("KundenListe");
                 OnPropertyChanged("SelectedBerater");
+                OnPropertyChanged("SelectedKunde");
             }
         }
 
@@ -61,8 +82,18 @@ namespace BankWPF.ViewModels
             set
             {
                 selectedKunde = value;
-                
+                setKredite(selectedKunde);
                 OnPropertyChanged("SelectedKunde");
+            }
+        }
+
+        public Kredit SelectedKredit
+        {
+            get { return selectedKredit; }
+            set
+            {
+                selectedKredit = value;
+                OnPropertyChanged("SelectedKredit");
             }
         }
 
@@ -79,6 +110,19 @@ namespace BankWPF.ViewModels
             KundeCol kundenListe = new KundeCol();
             kundenListe = KundenAnlegenViewViewModel.ReadCSV(BeraterListe);
             return kundenListe;
+        }
+
+        private void setKredite(Kunde selected)
+        {
+            //wenn gewaehlter Kunde eq GKunde zeige Kredite
+            if (Object.ReferenceEquals(selected.GetType(), new GKunde().GetType())){
+                ShowCredit ="Visible";
+            }
+            //wenn nicht verstecke Kreditfenster und verstecke Buttons
+            else
+            {
+                ShowCredit = "Hidden";
+            }
         }
 
         public static ObservableCollection<Mitarbeiter> ReadCSV()
@@ -149,6 +193,26 @@ namespace BankWPF.ViewModels
             return bcol;
         }
 
+        private bool OnDenieCanExecute(object arg)
+        {
+            return true;
+        }
+        private void OnDenieExecuted(object obj)
+        {
+            SelectedKredit.Status = "abgelehnt";
+            OnPropertyChanged("SelectedKredit");
+        }
+
+        private bool OnAcceptCanExecute(object arg)
+        {
+            return true;
+        }
+        private void OnAcceptExecuted(object obj)
+        {
+            SelectedKredit.Status = "genehmigt";
+            OnPropertyChanged("SelectedKredit");
+            String bla = "bla";
+        }
 
         public static void SaveCSV(ObservableCollection<Mitarbeiter> mcol)
         {
