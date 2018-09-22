@@ -16,11 +16,27 @@ namespace BankWPF.ViewModels
     {
         String l_name;
         String l_password;
-        public ICommand LoginCommand { get; private set; }
         String vorlogin;
         String nachlogin;
+        public Kunde Kunde
+        {
+            get { return kunde; }
+            set
+            {
+                kunde = value;
+                OnPropertyChanged("Kunde");
+            }
+        }
         Kunde kunde;
-        String selectedAction;
+        public ObservableCollection<Kunde> Kcol
+        {
+            get { return kcol; }
+            set
+            {
+                kcol = value;
+                OnPropertyChanged("Kcol");
+            }
+        }
         ObservableCollection<Kunde> kcol;
         ObservableCollection<Mitarbeiter> mcol;
         public string L_password
@@ -39,24 +55,6 @@ namespace BankWPF.ViewModels
             {
                 l_name = value;
                 OnPropertyChanged("L_name");
-            }
-        }
-        public ObservableCollection<Kunde> Kcol
-        {
-            get { return kcol; }
-            set
-            {
-                kcol = value;
-                OnPropertyChanged("Kcol");
-            }
-        }
-        public Kunde Kunde
-        {
-            get { return kunde; }
-            set
-            {
-                kunde = value;
-                OnPropertyChanged("Kunde");
             }
         }
         public String Vorlogin
@@ -190,24 +188,30 @@ namespace BankWPF.ViewModels
                 OnPropertyChanged("SelectedÜberweisenEmpfänger");
             }
         }
+        public String SelectedKreditBetrag
+        {
+            get { return selectedKreditBetrag; }
+            set
+            {
+                selectedKreditBetrag = value;
+                OnPropertyChanged("SelectedKreditBetrag");
+            }
+        }
         String showActionAuszahlen;
         String showActionÜberweisen;
         String showActionEinzahlen;
         String showActionKreditBeantragen;
+        String selectedAction;
         String selectedEinzahlenBetrag;
         String selectedAuszahlenBetrag;
         String selectedÜberweisenBetrag;
         String selectedÜberweisenEmpfänger;
+        String selectedKreditBetrag;
+        public ICommand LoginCommand { get; private set; }
         public ICommand ActionCommandEinzahlen { get; set; }
         public ICommand ActionCommandAuszahlen { get; set; }
         public ICommand ActionCommandÜberweisen { get; set; }
-
-
-
-
-
-
-
+        public ICommand ActionCommandKreditBeantragen { get; set; }
 
         public KundenLoginViewViewModel()
         {
@@ -217,6 +221,7 @@ namespace BankWPF.ViewModels
             ActionCommandÜberweisen = new ActionCommand(OnÜberweisenExecute, OnÜberweisenCanExecute);
             ActionCommandAuszahlen = new ActionCommand(OnAuszahlenExecute, OnAuszahlenCanExecute);
             ActionCommandEinzahlen = new ActionCommand(OnEinzahlenExecute, OnEinzahlenCanExecute);
+            ActionCommandKreditBeantragen = new ActionCommand(OnKreditBeantrageExecute, OnKreditBeantragenCanExecute);
             LoginCommand = new ActionCommand(OnLoginExecuted, OnLoginCanExecute);
             L_password = "";
             L_name = "";
@@ -228,6 +233,30 @@ namespace BankWPF.ViewModels
             showActionKreditBeantragen = "Hidden";
         }
 
+
+
+        // KreditBeantragen Button
+        private bool OnKreditBeantragenCanExecute(object arg)
+        {
+            foreach (Mitarbeiter item in mcol)
+            {
+                if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
+                {
+                    if (((GKBerater)item).Kredite.Count(x => x.Id == Kunde.Kundennummer && x.Status == "wartend") > 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        private void OnKreditBeantrageExecute(object obj)
+        {
+            GKBerater SollteEinGKBeraterSein = ((GKBerater)mcol.Where(y => y.Mitarrbeiternummer == Kunde.Berater.Mitarrbeiternummer).First());
+            OnPropertyChanged("Kunde");
+            KundenAnlegenViewViewModel.SaveCSV(kcol);
+            BeraterUebersichtViewViewModel.SaveCSV(mcol);
+        }
         // Überweisen Button
         private bool OnÜberweisenCanExecute(object arg)
         {
@@ -255,7 +284,6 @@ namespace BankWPF.ViewModels
 
             return false;
         }
-
         private void OnÜberweisenExecute(object obj)
         {
             Transaktion trans = new Transaktion(Convert.ToInt64(SelectedÜberweisenBetrag), "Überwiesen");
