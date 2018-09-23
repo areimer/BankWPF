@@ -204,11 +204,17 @@ namespace BankWPF.ViewModels
         private void OnDenieExecuted(object obj)
         {
             SelectedKredit.Status = "abgelehnt";
-            foreach(Kredit k in (SelectedKunde.Berater as GKBerater).Kredite)
+            foreach(Mitarbeiter m in (BeraterListe))
             {
-                if (k.Id == SelectedKunde.Kundennummer)
+                if (m.GetType() == new GKBerater().GetType())
                 {
-                    k.Status = "abgelehnt";
+                    foreach (Kredit k in ((m as GKBerater).Kredite))
+                    {
+                        if (k.Id == SelectedKunde.Kundennummer)
+                        {
+                            k.Status = "abgelehnt";
+                        }
+                    }
                 }
             }
             SaveCSV(BeraterListe);
@@ -223,13 +229,19 @@ namespace BankWPF.ViewModels
         }
         private void OnAcceptExecuted(object obj)
         {
-            foreach (Kredit k in (SelectedKunde.Berater as GKBerater).Kredite)
+            SelectedKredit.Status = "genehmigt";
+            foreach (Mitarbeiter m in (BeraterListe))
             {
-                if (k.Id == SelectedKunde.Kundennummer)
+                if (m.GetType() == new GKBerater().GetType())
                 {
-                    k.Status = "genehmigt";
+                    foreach (Kredit k in ((m as GKBerater).Kredite))
+                    {
+                        if (k.Id == SelectedKunde.Kundennummer)
+                        {
+                            k.Status = "abgelehnt";
+                        }
+                    }
                 }
-                SaveCSV(BeraterListe);
             }
             SelectedKredit.Status = "genehmigt";
             OnPropertyChanged("SelectedKredit");
