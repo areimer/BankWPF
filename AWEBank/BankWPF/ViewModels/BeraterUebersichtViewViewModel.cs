@@ -254,7 +254,7 @@ namespace BankWPF.ViewModels
         {
             foreach (Mitarbeiter item in mcol)
             {
-                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater\\" + item.Mitarrbeiternummer + "_t.txt"))
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater\\" + item.Mitarrbeiternummer + ".txt"))
                 {
 
 
@@ -265,10 +265,10 @@ namespace BankWPF.ViewModels
                     }
                     if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
                     {
-                        sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";0");
+                        sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";1");
                         foreach (Kredit subitem in (item as GKBerater).Kredite)
                         {
-                            sw.WriteLine(subitem.Betrag + ";" + subitem.Betrag + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute);
+                            sw.WriteLine(subitem.Id + ";" + subitem.Betrag + ";" + subitem.LaufzeitMonate + ";" + subitem.Zinssatz + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute + ";" + subitem.Tilgungsrate + ";" + subitem.Status);
 
                         }
                     }
