@@ -14,7 +14,7 @@ namespace BankWPF.ViewModels
     class BeraterUebersichtViewViewModel : ViewModelBase
     {
         public ObservableCollection<Mitarbeiter> BeraterListe { get; set; }
-        public KundeCol KundenListe { get; set; }
+        public ObservableCollection<Kunde> KundenListe { get; set; }
         public ObservableCollection<Kredit> KreditListe { get; set; }
         private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
@@ -59,7 +59,7 @@ namespace BankWPF.ViewModels
             {
                 selectedBerater = value;
                 SelectedKunde = new Kunde();
-                KundenListe = new KundeCol();
+                KundenListe = new ObservableCollection<Kunde>();
                 // Betanke Kundenliste nur mit den kunden, die den berater auch haben.
                 foreach (Kunde item in LoadKundenData())
                 {
@@ -105,25 +105,31 @@ namespace BankWPF.ViewModels
             return beraterListe;
         }
 
-        private KundeCol LoadKundenData()
+        private ObservableCollection<Kunde> LoadKundenData()
         {
-            KundeCol kundenListe = new KundeCol();
+            ObservableCollection<Kunde> kundenListe = new ObservableCollection<Kunde>();
             kundenListe = KundenAnlegenViewViewModel.ReadCSV(BeraterListe);
             return kundenListe;
         }
 
         private void setKredite(Kunde selected)
         {
-            //wenn gewaehlter Kunde eq GKunde zeige Kredite
-            if (Object.ReferenceEquals(selected.GetType(), new GKunde().GetType())){
-                KreditListe =new ObservableCollection<Kredit>(((GKBerater)SelectedKunde.Berater).Kredite.Where(x => x.Id == SelectedKunde.Kundennummer));
-                OnPropertyChanged("KreditListe");
-                ShowCredit ="Visible";
-            }
-            //wenn nicht verstecke Kreditfenster und verstecke Buttons
-            else
+            if (selected != null)
             {
-                ShowCredit = "Hidden";
+
+
+                //wenn gewaehlter Kunde eq GKunde zeige Kredite
+                if (Object.ReferenceEquals(selected.GetType(), new GKunde().GetType()))
+                {
+                    KreditListe = new ObservableCollection<Kredit>(((GKBerater)SelectedKunde.Berater).Kredite.Where(x => x.Id == SelectedKunde.Kundennummer));
+                    OnPropertyChanged("KreditListe");
+                    ShowCredit = "Visible";
+                }
+                //wenn nicht verstecke Kreditfenster und verstecke Buttons
+                else
+                {
+                    ShowCredit = "Hidden";
+                }
             }
         }
 
@@ -198,6 +204,10 @@ namespace BankWPF.ViewModels
 
         private bool OnDenieCanExecute(object arg)
         {
+            if (SelectedKredit == null)
+            {
+                return false;
+            }
             if (SelectedKredit.Status == "wartend") { return true; }
             else { return false; }
         }
@@ -210,14 +220,31 @@ namespace BankWPF.ViewModels
 
         private bool OnAcceptCanExecute(object arg)
         {
+            if (SelectedKredit == null)
+            {
+                return false;
+            }
             if (SelectedKredit.Status == "wartend") { return true; }
             else { return false; }
         }
         private void OnAcceptExecuted(object obj)
         {
+
             SelectedKredit.Status = "genehmigt";
-            OnPropertyChanged("SelectedKredit");
+            if (Object.ReferenceEquals(SelectedBerater.GetType(), new GKBerater().GetType()))
+            {
+                Transaktion trans = new Transaktion(SelectedKredit.Betrag, "Überweisung (Kredit)");
+                SelectedKunde.Konto.Transaktionen.Add(trans);
+                SelectedKunde.Konto.Kontostand += SelectedKredit.Betrag;
+                SelectedKredit.Status = "Genehmigt";
+                //((GKBerater)SelectedBerater).Kredite.Where(x=>x.)
+                SaveCSV(BeraterListe);
+                KundenAnlegenViewViewModel.SaveCSV(KundenListe);
+            }
+            KreditListe.Add(SelectedKredit);
+            KreditListe.Remove(SelectedKredit);
             OnPropertyChanged("KreditListe");
+            OnPropertyChanged("SelectedKredit");
         }
 
         public static void SaveCSV(ObservableCollection<Mitarbeiter> mcol)
@@ -231,7 +258,7 @@ namespace BankWPF.ViewModels
                     if (Object.ReferenceEquals(item.GetType(), new Berater().GetType()))
                     {
                         sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";0");
-                        
+
                     }
                     if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
                     {
