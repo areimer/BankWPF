@@ -20,19 +20,25 @@ namespace BankWPF.ViewModels
 {
     class KundenAnlegenViewViewModel : ViewModelBase
     {
-        public ObservableCollection<Mitarbeiter> MitarbeiterListe { get; set; }
-        public KundeCol KundenListe { get; set; }
-        public ICommand AnlegenCommand { get; private set; }
         Berater newAdvisor = new Berater();
         GKBerater newGAdvisor = new GKBerater();
         Kunde newKunde = new Kunde();
         GKunde newGKunde = new GKunde();
+        Mitarbeiter n_mitarbeiter;
         Boolean gKunde;
+        String n_name;
+        Boolean n_gk;
+        Boolean n_bon;
+        string n_ergebnis;
+        int n_alter;
+        public ObservableCollection<Mitarbeiter> MitarbeiterListe { get; set; }
+        public KundeCol KundenListe { get; set; }
+        public ICommand AnlegenCommand { get; private set; }
         public Boolean GKunde {
             get { return gKunde; }
             set
             {
-
+                
                 gKunde = value;
                 if (GKunde)
                 {
@@ -58,21 +64,20 @@ namespace BankWPF.ViewModels
                 OnPropertyChanged("GKunde");
             }
         }
-
-
-
-
-        String n_name;
+        public string N_ergebnis
+        {
+            get { return n_ergebnis; }
+            set
+            {
+                n_ergebnis = value;
+                OnPropertyChanged("N_ergebnis");
+            }
+        }
         public String N_name { get; set; }
-        int n_alter;
         public int N_alter { get; set; }
-        Mitarbeiter n_mitarbeiter;
         public Mitarbeiter N_mitarbeiter { get; set; }
-        Boolean n_gk;
         public Boolean N_gk { get; set; }
-        Boolean n_bon;
         public Boolean N_bon { get; set; }
-        string n_ergebnis;
 
 
 
@@ -80,15 +85,10 @@ namespace BankWPF.ViewModels
 
         public KundenAnlegenViewViewModel()
         {
+            MitarbeiterListe = new ObservableCollection<Mitarbeiter>();
             AnlegenCommand = new ActionCommand(OnAnlegenExecuted, OnAnlegenCanExecute);
             KundenListe = new KundeCol();
-            MitarbeiterListe = new ObservableCollection<Mitarbeiter>();
             GKunde = false;
-            foreach (Mitarbeiter item in BeraterUebersichtViewViewModel.ReadCSV().Where(x => x.IsGKB == false))
-            {
-                MitarbeiterListe.Add(item);
-            }
-            N_mitarbeiter = MitarbeiterListe.First();
             OnPropertyChanged("N_mitarbeiter");
             KundenListe = ReadCSV(MitarbeiterListe);
             N_ergebnis = "";
@@ -117,7 +117,11 @@ namespace BankWPF.ViewModels
         // Löschen Button
         private bool OnAnlegenCanExecute(object arg)
         {
-            return true;
+            if (N_alter > 0 && N_mitarbeiter != null && N_name != "")
+            {
+                return true;
+            }
+            return false;
         }
         private void OnAnlegenExecuted(object obj)
         {
@@ -168,6 +172,9 @@ namespace BankWPF.ViewModels
 
         }
 
+
+
+        // Save CSV
         public static void SaveCSV(ObservableCollection<Kunde> col)
         {
             foreach (Kunde item in col)
@@ -213,21 +220,7 @@ namespace BankWPF.ViewModels
                 }
             }
         }
-
-        public string N_ergebnis
-        {
-            get { return n_ergebnis; }
-            set
-            {
-                n_ergebnis = value;
-                OnPropertyChanged("N_ergebnis");
-            }
-        }
-
-
-
-
-
+        // ReadCSV
         public static KundeCol ReadCSV(ObservableCollection<Mitarbeiter> mcol)
         {
             KundeCol kcol = new KundeCol();
