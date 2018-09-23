@@ -27,7 +27,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="26">Alter</TextBlock>
         <TextBox Text="{Binding N_alter, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" FontSize="26" Name="CustomerAgeBox"/>
         <TextBlock Grid.Row="2" Grid.Column="0" FontSize="26">Berater</TextBlock>
-        <ComboBox ItemsSource="{Binding MitarbeiterListe}" Name="cmb" SelectedValue="{Binding N_mitarbeiter}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Column="1" Grid.Row="2">
+        <ComboBox ItemsSource="{Binding MitarbeiterListe, UpdateSourceTrigger=PropertyChanged}" Name="cmb" SelectedItem="{Binding N_mitarbeiter, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Column="1" Grid.Row="2">
             <ComboBox.ItemTemplate>
                 <DataTemplate >
                     <WrapPanel>
@@ -43,7 +43,7 @@
         </ComboBox>
         <!-- <TextBox Grid.Row="2" Grid.Column="1"  FontSize="26" Name="CustomerAdvisorBox"/> -->
         <TextBlock Grid.Row="3" Grid.Column="0" FontSize="26">Geschäftskunde</TextBlock>
-        <CheckBox  IsChecked="{Binding N_gk, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
+        <CheckBox  IsChecked="{Binding GKunde, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBusinessBox"></CheckBox>
         <TextBlock Grid.Row="4" Grid.Column="0" Width="323" FontSize="26" HorizontalAlignment="Left">Bonität</TextBlock>
         <CheckBox IsChecked="{Binding N_bon, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="CustomerBoniBox"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Name="customerMessageBox" Text="{Binding N_ergebnis, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBlock>

@@ -111,6 +111,15 @@ namespace BankWPF.ViewModels
                 OnPropertyChanged("ShowActionKreditBeantragen");
             }
         }
+        public String ShowActionKreditBeantragenGehtNicht
+        {
+            get { return showActionKreditBeantragenGehtNicht; }
+            set
+            {
+                showActionKreditBeantragenGehtNicht = value;
+                OnPropertyChanged("ShowActionKreditBeantragenGehtNicht");
+            }
+        }
         public String SelectedAction
         {
             get { return selectedAction; }
@@ -124,6 +133,7 @@ namespace BankWPF.ViewModels
                     ShowActionEinzahlen = "Visible";
                     ShowActionÜberweisen = "Hidden";
                     ShowActionKreditBeantragen = "Hidden";
+                    ShowActionKreditBeantragenGehtNicht = "Hidden";
                 }
                 if (SelectedAction.Contains("Auszahlen"))
                 {
@@ -131,6 +141,7 @@ namespace BankWPF.ViewModels
                     ShowActionEinzahlen = "Hidden";
                     ShowActionÜberweisen = "Hidden";
                     ShowActionKreditBeantragen = "Hidden";
+                    ShowActionKreditBeantragenGehtNicht = "Hidden";
                 }
                 if (SelectedAction.Contains("Überweisen"))
                 {
@@ -138,13 +149,23 @@ namespace BankWPF.ViewModels
                     ShowActionEinzahlen = "Hidden";
                     ShowActionÜberweisen = "Visible";
                     ShowActionKreditBeantragen = "Hidden";
+                    ShowActionKreditBeantragenGehtNicht = "Hidden";
                 }
-                if (SelectedAction.Contains("Kredit"))
+                if (SelectedAction.Contains("Kredit") && Kunde.Berater.IsGKB)
                 {
                     ShowActionAuszahlen = "Hidden";
                     ShowActionEinzahlen = "Hidden";
                     ShowActionÜberweisen = "Hidden";
                     ShowActionKreditBeantragen = "Visible";
+                    ShowActionKreditBeantragenGehtNicht = "Hidden";
+                }
+                if (SelectedAction.Contains("Kredit") && !Kunde.Berater.IsGKB)
+                {
+                    ShowActionAuszahlen = "Hidden";
+                    ShowActionEinzahlen = "Hidden";
+                    ShowActionÜberweisen = "Hidden";
+                    ShowActionKreditBeantragen = "Hidden";
+                    ShowActionKreditBeantragenGehtNicht = "Visible";
                 }
                 OnPropertyChanged("ShowActionEinzahlen");
                 OnPropertyChanged("ShowActionÜberweisen");
@@ -188,25 +209,77 @@ namespace BankWPF.ViewModels
                 OnPropertyChanged("SelectedÜberweisenEmpfänger");
             }
         }
-        public String SelectedKreditBetrag
+        public int SelectedKreditBetrag
         {
             get { return selectedKreditBetrag; }
             set
             {
                 selectedKreditBetrag = value;
                 OnPropertyChanged("SelectedKreditBetrag");
+                SelectedKreditLaufzeit = SelectedKreditLaufzeit;
+            }
+        }
+        public int SelectedKreditLaufzeit
+        {
+            get { return selectedKreditLaufzeit; }
+            set
+            {
+                selectedKreditLaufzeit = value;
+                SelectedKreditZinzsatz = 6;
+                if (SelectedKreditLaufzeit > 5)
+                {
+                    SelectedKreditZinzsatz = 8;
+                }
+                if (SelectedKreditLaufzeit > 11)
+                {
+                    SelectedKreditZinzsatz = 10;
+                }
+                if (SelectedKreditLaufzeit > 23)
+                {
+                    SelectedKreditZinzsatz = 12;
+                }
+                if (SelectedKreditLaufzeit > 47)
+                {
+                    SelectedKreditZinzsatz = 14;
+                }
+                OnPropertyChanged("SelectedKreditZinzsatz");
+                OnPropertyChanged("SelectedKreditLaufzeit");
+            }
+        }
+        public Double SelectedKreditTilgungsrate
+        {
+            get { return selectedKreditTilgungsrate; }
+            set
+            {
+                selectedKreditTilgungsrate = value;
+                OnPropertyChanged("SelectedKreditTilgungsrate");
+            }
+        }
+        public int SelectedKreditZinzsatz
+        {
+            get { return selectedKreditZinzsatz; }
+            set
+            {
+                selectedKreditZinzsatz = value;
+                SelectedKreditTilgungsrate = ((SelectedKreditBetrag * (1 + (Convert.ToDouble(SelectedKreditZinzsatz) / 100))) / SelectedKreditLaufzeit);
+                OnPropertyChanged("SelectedKreditZinzsatz");
+                OnPropertyChanged("SelectedKreditTilgungsrate");
             }
         }
         String showActionAuszahlen;
         String showActionÜberweisen;
         String showActionEinzahlen;
         String showActionKreditBeantragen;
+        String showActionKreditBeantragenGehtNicht;
         String selectedAction;
         String selectedEinzahlenBetrag;
         String selectedAuszahlenBetrag;
         String selectedÜberweisenBetrag;
         String selectedÜberweisenEmpfänger;
-        String selectedKreditBetrag;
+        int selectedKreditBetrag;
+        int selectedKreditLaufzeit;
+        Double selectedKreditTilgungsrate;
+        int selectedKreditZinzsatz;
         public ICommand LoginCommand { get; private set; }
         public ICommand ActionCommandEinzahlen { get; set; }
         public ICommand ActionCommandAuszahlen { get; set; }
@@ -223,14 +296,17 @@ namespace BankWPF.ViewModels
             ActionCommandEinzahlen = new ActionCommand(OnEinzahlenExecute, OnEinzahlenCanExecute);
             ActionCommandKreditBeantragen = new ActionCommand(OnKreditBeantrageExecute, OnKreditBeantragenCanExecute);
             LoginCommand = new ActionCommand(OnLoginExecuted, OnLoginCanExecute);
-            L_password = "";
-            L_name = "";
+            L_password = "1234";
+            L_name = "Otto Herrmann";
             Vorlogin = "Visible";
             Nachlogin = "Hidden";
             ShowActionAuszahlen = "Hidden";
             ShowActionÜberweisen = "Hidden";
             ShowActionEinzahlen = "Hidden";
+            ShowActionKreditBeantragenGehtNicht = "Hidden";
             showActionKreditBeantragen = "Hidden";
+            SelectedKreditBetrag = 500;
+            SelectedKreditLaufzeit = 12;
         }
 
 
@@ -274,7 +350,7 @@ namespace BankWPF.ViewModels
             {
                 return false;
             }
-            if (Kunde.Konto.Kontostand >= Convert.ToInt32(SelectedÜberweisenBetrag))
+            if (Kunde.Konto.Kontostand >= Convert.ToDouble(SelectedÜberweisenBetrag))
             {
                 if (kcol.Count(x => x.Name == SelectedÜberweisenEmpfänger) > 0)
                 {
