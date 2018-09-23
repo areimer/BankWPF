@@ -13,25 +13,20 @@ namespace BankWPF.ViewModels
 {
     class BeraterViewViewModel : ViewModelBase
     {
-        public ICommand ClickCreateBerater { get; set; }
         private ObservableCollection<Mitarbeiter> mcol = new ObservableCollection<Mitarbeiter>();
-
         String n_name;
+        bool n_isgkb;
         public String N_name { get; set; }
         public String n_filiale;
         public String N_filiale { get; set; }
         public bool N_isgkb { get; set; }
-        bool n_isgkb;
+        public ICommand ClickCreateBerater { get; set; }
+
 
         public BeraterViewViewModel()
         {
             ClickCreateBerater = new ActionCommand(CreateNewBerater, OnAnlegenCanExecute);
             mcol = BeraterUebersichtViewViewModel.ReadCSV();
-        }
-
-        private bool OnAnlegenCanExecute(object arg)
-        {
-            return true;
         }
 
         private int GetLastID(ObservableCollection<Mitarbeiter> mcol)
@@ -54,6 +49,16 @@ namespace BankWPF.ViewModels
             }
         }
 
+
+        // Anlegen BUtton
+        private bool OnAnlegenCanExecute(object arg)
+        {
+            if (N_filiale != "" && N_name != null)
+            {
+                return true;
+            }
+            return false;
+        }
         private void CreateNewBerater(object obj)
         {
             // Button Logik
