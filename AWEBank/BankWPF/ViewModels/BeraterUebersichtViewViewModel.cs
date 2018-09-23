@@ -238,12 +238,12 @@ namespace BankWPF.ViewModels
                     {
                         if (k.Id == SelectedKunde.Kundennummer)
                         {
-                            k.Status = "abgelehnt";
+                            k.Status = "genehmigt";
                         }
                     }
                 }
             }
-            SelectedKredit.Status = "genehmigt";
+            SaveCSV(BeraterListe);
             OnPropertyChanged("SelectedKredit");
             OnPropertyChanged("KreditListe");
         }
