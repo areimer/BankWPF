@@ -15,7 +15,7 @@ namespace BankWPF.ViewModels
     {
         public ObservableCollection<Mitarbeiter> BeraterListe { get; set; }
         public KundeCol KundenListe { get; set; }
-        public KreditCol KreditListe { get; set; }
+        public ObservableCollection<Kredit> KreditListe { get; set; }
         private Mitarbeiter selectedBerater;
         private Kunde selectedKunde;
         private Kredit selectedKredit;
@@ -116,7 +116,7 @@ namespace BankWPF.ViewModels
         {
             //wenn gewaehlter Kunde eq GKunde zeige Kredite
             if (Object.ReferenceEquals(selected.GetType(), new GKunde().GetType())){
-                KreditListe = ReadKredite();
+                KreditListe =new ObservableCollection<Kredit>(((GKBerater)SelectedKunde.Berater).Kredite.Where(x => x.Id == SelectedKunde.Kundennummer));
                 OnPropertyChanged("KreditListe");
                 ShowCredit ="Visible";
             }
@@ -125,36 +125,6 @@ namespace BankWPF.ViewModels
             {
                 ShowCredit = "Hidden";
             }
-        }
-
-        private KreditCol ReadKredite()
-        {
-            KreditCol kcol = new KreditCol();
-            System.IO.StreamReader reader = new System.IO.StreamReader(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater\\"+SelectedKunde.Berater.Mitarrbeiternummer+".txt");
-            string line;
-            int row = 0;
-            while ((line = reader.ReadLine()) != null)
-            {
-                if (row == 0) { row++; }
-                else
-                {
-                    if (Convert.ToInt32(line.Split(';')[0]) == SelectedKunde.Kundennummer)
-                    {
-                        Kredit tKredit = new Kredit()
-                        {
-                            Betrag = Convert.ToInt32(line.Split(';')[1]),
-                            LaufzeitMonate = Convert.ToInt32(line.Split(';')[2]),
-                            Zinssatz = Convert.ToInt32(line.Split(';')[3]),
-                            StartDatum = new DateTime(),
-                            Tilgungsrate= Convert.ToDouble(line.Split(';')[5]),
-                            Status = line.Split(';')[6],
-                        };
-                        kcol.Add(tKredit);
-                        row++;
-                    }
-                }
-            }
-            return kcol;
         }
 
         public static ObservableCollection<Mitarbeiter> ReadCSV()
