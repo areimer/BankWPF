@@ -213,9 +213,47 @@ namespace BankWPF.ViewModels
         }
         private void OnDenieExecuted(object obj)
         {
-            SelectedKredit.Status = "abgelehnt";
-            OnPropertyChanged("SelectedKredit");
+
+
+
+            //SelectedKredit.Status = "genehmigt";
+            if (Object.ReferenceEquals(SelectedBerater.GetType(), new GKBerater().GetType()))
+            {
+                Transaktion trans = new Transaktion(0, "Kredit Abgelehnt");
+                SelectedKunde.Konto.Transaktionen.Add(trans);
+                SelectedKredit.Status = "abgelehnt";
+                //((GKBerater)SelectedBerater).Kredite.Where(x=>x.)
+
+            }
+            KreditListe.Add(SelectedKredit);
+            KreditListe.Remove(SelectedKredit);
+            SelectedKredit = KreditListe.LastOrDefault();
             OnPropertyChanged("KreditListe");
+            OnPropertyChanged("SelectedKredit");
+            foreach (Mitarbeiter item in BeraterListe)
+            {
+                if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
+                {
+                    foreach (Kredit subitem in ((GKBerater)item as GKBerater).Kredite)
+                    {
+                        if (subitem.Id == SelectedKredit.Id && SelectedKunde.Berater.Mitarrbeiternummer == item.Mitarrbeiternummer)
+                        {
+                            subitem.Status = "abgelehnt";
+                        }
+                    }
+
+                }
+            }
+            SaveCSV(BeraterListe);
+            KundenAnlegenViewViewModel.SaveCSV(KundenListe);
+
+
+
+
+
+
+
+
         }
 
         private bool OnAcceptCanExecute(object arg)
@@ -230,21 +268,37 @@ namespace BankWPF.ViewModels
         private void OnAcceptExecuted(object obj)
         {
 
-            SelectedKredit.Status = "genehmigt";
+            //SelectedKredit.Status = "genehmigt";
             if (Object.ReferenceEquals(SelectedBerater.GetType(), new GKBerater().GetType()))
             {
                 Transaktion trans = new Transaktion(SelectedKredit.Betrag, "Überweisung (Kredit)");
                 SelectedKunde.Konto.Transaktionen.Add(trans);
                 SelectedKunde.Konto.Kontostand += SelectedKredit.Betrag;
-                SelectedKredit.Status = "Genehmigt";
+                SelectedKredit.Status = "genehmigt";
                 //((GKBerater)SelectedBerater).Kredite.Where(x=>x.)
-                SaveCSV(BeraterListe);
-                KundenAnlegenViewViewModel.SaveCSV(KundenListe);
+                
             }
             KreditListe.Add(SelectedKredit);
             KreditListe.Remove(SelectedKredit);
+            SelectedKredit = KreditListe.LastOrDefault();
             OnPropertyChanged("KreditListe");
             OnPropertyChanged("SelectedKredit");
+            foreach (Mitarbeiter item in BeraterListe)
+            {
+                if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
+                {
+                    foreach (Kredit subitem in ((GKBerater)item as GKBerater).Kredite)
+                    {
+                        if (subitem.Id == SelectedKredit.Id && SelectedKunde.Berater.Mitarrbeiternummer == item.Mitarrbeiternummer)
+                        {
+                            subitem.Status = "genehmigt";
+                        }
+                    }
+
+                }
+                }
+            SaveCSV(BeraterListe);
+            KundenAnlegenViewViewModel.SaveCSV(KundenListe);
         }
 
         public static void SaveCSV(ObservableCollection<Mitarbeiter> mcol)
