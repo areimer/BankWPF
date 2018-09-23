@@ -1,0 +1,5 @@
+13;Kaan Gould;65;Armin Reimer;1
+13;6800
+7000;Überweisung (Kredit);2018.9.23.14.15
+100;Ausgezahlt;2018.9.23.14.15
+100;Ausgezahlt;2018.9.23.14.15

@@ -1,0 +1,5 @@
+12;Opal Meyers;67;Armin Reimer;1
+12;200
+0;Kredit Abgelehnt;2018.9.23.14.13
+0;Kredit Abgelehnt;2018.9.23.14.13
+200;Überweisung (Kredit);2018.9.23.14.14

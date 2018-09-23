@@ -1,0 +1,7 @@
+8;Vlad Potter;26;Gustav Geldgeil;0
+8;300
+200;Eingezahlt;2018.9.23.14.14
+200;Eingezahlt;2018.9.23.14.14
+200;Eingezahlt;2018.9.23.14.14
+200;Eingezahlt;2018.9.23.14.14
+500;Überwiesen;2018.9.23.14.14

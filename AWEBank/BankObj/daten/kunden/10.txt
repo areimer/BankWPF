@@ -1,0 +1,3 @@
+10;Abdurrahman Chan;34;Gustav Geldgeil;0
+10;500
+500;Überwiesen;2018.9.23.14.14

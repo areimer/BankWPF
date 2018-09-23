@@ -1,4 +1,8 @@
-﻿0;Otto Herrmann;24;Gustav Geldgeil;0
-0;500,00
-1000;ein;2018.09.19.10.00
-500;aus;2018.09.19.10.30
+0;Otto Herrmann;24;Gustav Geldgeil;0
+0;360
+1000;ein;2018.9.19.10.0
+500;aus;2018.9.19.10.30
+200;Überwiesen;2018.9.23.14.9
+40;Überwiesen;2018.9.23.14.9
+100;Ausgezahlt;2018.9.23.14.9
+200;Eingezahlt;2018.9.23.14.9
