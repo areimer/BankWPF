@@ -191,7 +191,7 @@ namespace BankWPF.ViewModels
                 OnPropertyChanged("SelectedAuszahlenBetrag");
             }
         }
-        public String SelectedÜberweisenBetrag
+        public Double SelectedÜberweisenBetrag
         {
             get { return selectedÜberweisenBetrag; }
             set
@@ -274,7 +274,7 @@ namespace BankWPF.ViewModels
         String selectedAction;
         String selectedEinzahlenBetrag;
         String selectedAuszahlenBetrag;
-        String selectedÜberweisenBetrag;
+        Double selectedÜberweisenBetrag;
         String selectedÜberweisenEmpfänger;
         int selectedKreditBetrag;
         int selectedKreditLaufzeit;
@@ -347,7 +347,7 @@ namespace BankWPF.ViewModels
             //        }
             //   }
             //}
-            if (SelectedÜberweisenBetrag == null || selectedÜberweisenEmpfänger == null)
+            if (selectedÜberweisenEmpfänger == null || SelectedÜberweisenBetrag < 0)
             {
                 return false;
             }

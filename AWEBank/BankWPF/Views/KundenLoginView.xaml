@@ -118,7 +118,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditBetrag, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditZinzsatz, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Height="30" IsEnabled="False" Width="170" FontSize="16" IsReadOnly="True" Text="{Binding SelectedKreditZinzsatz, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Width="170" FontSize="20" Text="Laufzeit (Monate)"></TextBlock>
@@ -126,7 +126,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditLaufzeit, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditTilgungsrate, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox IsEnabled="False" Height="30" Width="170" FontSize="16" IsReadOnly="True"  Text="{Binding SelectedKreditTilgungsrate, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <Button  HorizontalAlignment="Center" Height="30" Margin="0,24,0,0" FontSize="20" Width="200" Command="{Binding ActionCommandKreditBeantragen}">Beantragen</Button>
                 </StackPanel>
