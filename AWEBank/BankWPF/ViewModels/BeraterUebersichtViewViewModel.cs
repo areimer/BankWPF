@@ -211,7 +211,7 @@ namespace BankWPF.ViewModels
         {
             SelectedKredit.Status = "genehmigt";
             OnPropertyChanged("SelectedKredit");
-            String bla = "bla";
+            OnPropertyChanged("KreditListe");
         }
 
         public static void SaveCSV(ObservableCollection<Mitarbeiter> mcol)
