@@ -50,17 +50,24 @@ namespace BankObj
     public class GKunde:Kunde
     {
         Boolean bonitaet;
-        Boolean Bonitaet { get; set; }
-        List<Kredit> kredite;
+        public Boolean Bonitaet { get; set; }
+        public List<Kredit> kredite;
         public List<Kredit> Kredite { get; set; }
-        new GKBerater Adv;
 
         public GKunde() :base() { }
 
         public GKunde(int kdnr, String name, int alter,bool boni, Konto k, GKBerater b):base(kdnr, name, alter,k)
         {
             this.Bonitaet = boni;
-            this.Adv = b;
+        }
+
+        public GKunde(int v1, string v2, int v3, Mitarbeiter mitarbeiter, Konto konto)
+        {
+            this.Kundennummer = v1;
+            this.Name = v2;
+            this.Alter = v3;
+            this.Berater = mitarbeiter;
+            this.Konto = konto;
         }
 
         //GKunde fordert Kredit an und legt ihn als "wartend" bei seinem Berater ab
@@ -69,7 +76,7 @@ namespace BankObj
             // id generieren
             int tId = 0;
             //Kredit beim zustaendigen Berater einlisten
-            this.Adv.Kredite.Add(new Kredit(tId, betrag,laufzeitMonate, 0, start,0,"wartend"));
+            ((GKBerater)Berater).Kredite.Add(new Kredit(tId, betrag,laufzeitMonate, 0, start,0,"wartend"));
         }
 
         public override String ToString()

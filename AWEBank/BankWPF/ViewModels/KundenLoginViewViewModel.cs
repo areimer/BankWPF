@@ -328,7 +328,8 @@ namespace BankWPF.ViewModels
         }
         private void OnKreditBeantrageExecute(object obj)
         {
-            GKBerater SollteEinGKBeraterSein = ((GKBerater)mcol.Where(y => y.Mitarrbeiternummer == Kunde.Berater.Mitarrbeiternummer).First());
+            GKBerater SollteEinGKBeraterSein = (GKBerater)mcol.Where(y => y.Mitarrbeiternummer == Kunde.Berater.Mitarrbeiternummer).First();
+            SollteEinGKBeraterSein.Kredite.Add(new Kredit(Kunde.Kundennummer, SelectedKreditBetrag, SelectedKreditLaufzeit, SelectedKreditZinzsatz, DateTime.Now, SelectedKreditTilgungsrate, "wartend"));
             OnPropertyChanged("Kunde");
             KundenAnlegenViewViewModel.SaveCSV(kcol);
             BeraterUebersichtViewViewModel.SaveCSV(mcol);

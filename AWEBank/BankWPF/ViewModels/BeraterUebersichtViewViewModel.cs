@@ -38,7 +38,7 @@ namespace BankWPF.ViewModels
             BeraterListe = LoadBeraterData();
             KundenListe = new KundeCol();
             KreditListe = new KreditCol();
-            KreditListe.Add(new BankObj.Kredit(775, 500, 12, 0, new DateTime(), 0, "wartend"));
+            //KreditListe.Add(new BankObj.Kredit(775, 500, 12, 0, new DateTime(), 0, "wartend"));
             ShowCredit = "Hidden";
             AcceptCommand = new ActionCommand(OnAcceptExecuted, OnAcceptCanExecute);
             DenieCommand = new ActionCommand(OnDenieExecuted, OnDenieCanExecute);
@@ -219,7 +219,7 @@ namespace BankWPF.ViewModels
         {
             foreach (Mitarbeiter item in mcol)
             {
-                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater\\" + item.Mitarrbeiternummer + "_t.txt"))
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "daten\\berater\\" + item.Mitarrbeiternummer + ".txt"))
                 {
 
 
@@ -230,12 +230,26 @@ namespace BankWPF.ViewModels
                     }
                     if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
                     {
-                        sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";0");
-                        foreach (Kredit subitem in (item as GKBerater).Kredite)
+                        sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";1");
+                        if ((item as GKBerater).Kredite != null)
                         {
-                            sw.WriteLine(subitem.Betrag + ";" + subitem.Betrag + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute);
+                            foreach (Kredit subitem in (item as GKBerater).Kredite)
+                            {
 
+                                //this.Id = id;
+                                //this.Betrag = betrag;
+                                //this.LaufzeitMonate = laufzeit;
+                                //this.Zinssatz = zinssatz;
+                                //this.StartDatum = start;
+                                //this.Tilgungsrate = tilgung;
+                                //this.Status = stat;
+
+
+                                sw.WriteLine(subitem.Id + ";" + subitem.Betrag + ";" + subitem.LaufzeitMonate + ";" + subitem.Zinssatz + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute + ";" + Convert.ToString(subitem.Tilgungsrate).Replace(',','.') + ";" + subitem.Status);
+
+                            }
                         }
+
                     }
                     sw.Close();
                 }

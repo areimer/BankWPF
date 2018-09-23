@@ -83,16 +83,15 @@ namespace BankWPF.ViewModels
             AnlegenCommand = new ActionCommand(OnAnlegenExecuted, OnAnlegenCanExecute);
             KundenListe = new KundeCol();
             MitarbeiterListe = new ObservableCollection<Mitarbeiter>();
+            GKunde = false;
             foreach (Mitarbeiter item in BeraterUebersichtViewViewModel.ReadCSV().Where(x => x.IsGKB == false))
             {
                 MitarbeiterListe.Add(item);
             }
-            N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
+            N_mitarbeiter = MitarbeiterListe.First();
             OnPropertyChanged("N_mitarbeiter");
             KundenListe = ReadCSV(MitarbeiterListe);
             N_ergebnis = "";
-            N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
-
         }
 
         private int GetLastID(KundeCol mcol)
@@ -128,7 +127,7 @@ namespace BankWPF.ViewModels
             test = N_name;
 
 
-            if (!N_gk)
+            if (!GKunde)
             {
 
 
@@ -275,20 +274,24 @@ namespace BankWPF.ViewModels
                         }
                         else if (line.Split(';')[4] == "1" && row == 0)
                         {
-                            GKunde br = new GKunde()
-                            {
-                                Kundennummer = Convert.ToInt32(line.Split(';')[0]),
-                                Name = line.Split(';')[1],
-                                Alter = Convert.ToInt32(line.Split(';')[2]),
-                                Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
-                                Konto = new Konto(Convert.ToInt32(line.Split(';')[0]))
 
+                            GKunde kbr = new GKunde(Convert.ToInt32(line.Split(';')[0]), line.Split(';')[1], Convert.ToInt32(line.Split(';')[2]), BeraterUebersichtViewViewModel.ReadCSV().Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(), new Konto(Convert.ToInt32(line.Split(';')[0])));
 
-                            };
+                            //GKunde kbr = new GKunde()
+                            //{
+                            //    Kundennummer = Convert.ToInt32(line.Split(';')[0]),
+                            //    Name = line.Split(';')[1],
+                            //    Alter = Convert.ToInt32(line.Split(';')[2]),
+                            //    Berater = mcol.Where(X => X.Name == line.Split(';')[3]).FirstOrDefault(),
+                            //    Konto = new Konto(Convert.ToInt32(line.Split(';')[0])),
+                                
+
+                            //};
                             isGK = true;
-                            br.Konto.Transaktionen = new ObservableCollection<Transaktion>();
+                            
+                            kbr.Konto.Transaktionen = new ObservableCollection<Transaktion>();
 
-                            kcol.Add(br);
+                            kcol.Add(kbr);
 
                         }
                     }
