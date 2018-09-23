@@ -17,7 +17,6 @@ namespace BankWPF.ViewModels
         String n_name;
         bool n_isgkb;
         public String N_name { get; set; }
-        public String n_filiale;
         public String N_filiale { get; set; }
         public bool N_isgkb { get; set; }
         public ICommand ClickCreateBerater { get; set; }
@@ -89,7 +88,12 @@ namespace BankWPF.ViewModels
                 };
                 mcol.Add(neuerB);
             }
-
+            N_name = "";
+            N_filiale = "";
+            N_isgkb = false;
+            OnPropertyChanged("N_name");
+            OnPropertyChanged("n_filiale");
+            OnPropertyChanged("N_isgkb");
             BeraterUebersichtViewViewModel.SaveCSV(mcol);
         }
     }

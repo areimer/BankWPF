@@ -47,7 +47,7 @@ namespace BankWPF.ViewModels
                 KundenListe.Add(item);
             }
             //Neuen, leeren Berater und Kunde als Default setzen
-            SelectedBerater = new Berater();
+            SelectedBerater = BeraterListe.FirstOrDefault();
             SelectedKunde = new Kunde();
         }
 
@@ -276,7 +276,7 @@ namespace BankWPF.ViewModels
                 SelectedKunde.Konto.Kontostand += SelectedKredit.Betrag;
                 SelectedKredit.Status = "genehmigt";
                 //((GKBerater)SelectedBerater).Kredite.Where(x=>x.)
-                
+
             }
             KreditListe.Add(SelectedKredit);
             KreditListe.Remove(SelectedKredit);
@@ -296,7 +296,7 @@ namespace BankWPF.ViewModels
                     }
 
                 }
-                }
+            }
             SaveCSV(BeraterListe);
             KundenAnlegenViewViewModel.SaveCSV(KundenListe);
         }
@@ -317,16 +317,20 @@ namespace BankWPF.ViewModels
                     if (Object.ReferenceEquals(item.GetType(), new GKBerater().GetType()))
                     {
                         sw.WriteLine(item.Mitarrbeiternummer + ";" + item.Name + ";" + item.Filiale + ";1");
-                        foreach (Kredit subitem in (item as GKBerater).Kredite)
+                        if ((item as GKBerater).Kredite != null)
                         {
-                            sw.WriteLine(subitem.Id + ";" + subitem.Betrag + ";" + subitem.LaufzeitMonate + ";" + subitem.Zinssatz + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute + ";" + subitem.Tilgungsrate + ";" + subitem.Status);
 
+                            foreach (Kredit subitem in (item as GKBerater).Kredite)
+                            {
+                                sw.WriteLine(subitem.Id + ";" + subitem.Betrag + ";" + subitem.LaufzeitMonate + ";" + subitem.Zinssatz + ";" + subitem.StartDatum.Year + "." + subitem.StartDatum.Month + "." + subitem.StartDatum.Day + "." + subitem.StartDatum.Hour + "." + subitem.StartDatum.Minute + ";" + subitem.Tilgungsrate + ";" + subitem.Status);
+
+                            }
                         }
+                        sw.Close();
                     }
-                    sw.Close();
                 }
-            }
 
+            }
         }
     }
 }
