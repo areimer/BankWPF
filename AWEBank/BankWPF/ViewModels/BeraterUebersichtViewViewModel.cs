@@ -162,7 +162,8 @@ namespace BankWPF.ViewModels
                                 Mitarrbeiternummer = Convert.ToInt32(line.Split(';')[0]),
                                 Name = line.Split(';')[1],
                                 Filiale = line.Split(';')[2],
-                                Kredite = new ObservableCollection<Kredit>()
+                                Kredite = new ObservableCollection<Kredit>(),
+                                IsGKB = true
                             };
                             bcol.Add(br);
                         }

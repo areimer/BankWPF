@@ -28,6 +28,7 @@
                     <DataGridTextColumn Width="Auto" Header="Mitarbeiternummer" Binding="{Binding Mitarrbeiternummer}"/>
                     <DataGridTextColumn Width="Auto" Header="Beratername" Binding="{Binding Name}"/>
                     <DataGridTextColumn Width="Auto" Header="Filiale" Binding="{Binding Filiale}"/>
+                    <DataGridTextColumn Width="Auto" Header="Geschäftskunden Betreuer" Binding="{Binding IsGKB}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
@@ -35,7 +36,8 @@
             <DataGrid Name="BeraterKundenGrid" ItemsSource="{Binding KundenListe}" SelectedItem="{Binding SelectedKunde,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Height="Auto" Width="Auto" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="Auto" Header="Kunde" Binding="{Binding Kundennummer}"/>
-                    <DataGridTextColumn Width="Auto" Header="Geschäftskunde" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Width="Auto" Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Width="Auto" Header="Geschäftskunde" Binding="{Binding Berater.IsGKB}"/>
                     <DataGridTextColumn Width="Auto" Header="Alter" Binding="{Binding Alter}"/>
                     <DataGridTextColumn Width="Auto" Header="Berater" Binding="{Binding Berater.Name}"/>
                     <DataGridTextColumn Width="Auto" Header="KontoStand" Binding="{Binding Konto.Kontostand}"/>

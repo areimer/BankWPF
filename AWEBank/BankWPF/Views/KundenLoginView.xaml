@@ -112,10 +112,25 @@
                     <Button  VerticalAlignment="Center" Height="30" Margin="0,24,0,0" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" FontSize="20" Width="150" Command="{Binding ActionCommandÜberweisen}">Überweisen</Button>
                 </Grid>
                 <StackPanel Grid.Column="1" Grid.Row="6" Grid.RowSpan="3" Visibility="{Binding ShowActionKreditBeantragen}" VerticalAlignment="Top">
-                    <TextBlock TextAlignment="Center" Width="150" HorizontalAlignment="Center" FontSize="20" Text="Betrag:"></TextBlock>
-                    <TextBox HorizontalAlignment="Center" Height="30" Width="150" FontSize="16" Text="{Binding SelectedKreditBetrag, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button  HorizontalAlignment="Center" Height="30" Margin="0,24,0,0" FontSize="20" Width="150" Command="{Binding ActionCommandKreditBeantragen}">Beantragen</Button>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="170" FontSize="20" Text="Betrag"></TextBlock>
+                        <TextBlock FontSize="20" Width="170">Zinzsatz</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditBetrag, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditZinzsatz, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="170" FontSize="20" Text="Laufzeit (Monate)"></TextBlock>
+                        <TextBlock FontSize="20" Width="170">Tilgungsrate</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditLaufzeit, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Height="30" Width="170" FontSize="16" Text="{Binding SelectedKreditTilgungsrate, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <Button  HorizontalAlignment="Center" Height="30" Margin="0,24,0,0" FontSize="20" Width="200" Command="{Binding ActionCommandKreditBeantragen}">Beantragen</Button>
                 </StackPanel>
+                <TextBlock Grid.Column="1" Grid.Row="6" Grid.RowSpan="3" Visibility="{Binding ShowActionKreditBeantragenGehtNicht}" VerticalAlignment="Top" Text="Nur Für Geschäftskunden"/>
             </Grid>
             <StackPanel Grid.Column="1" Grid.Row="0">
                 <TextBlock FontSize="20" Text="Transaktionshistorie"></TextBlock>

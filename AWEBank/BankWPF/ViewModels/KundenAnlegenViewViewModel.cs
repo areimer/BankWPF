@@ -27,7 +27,37 @@ namespace BankWPF.ViewModels
         GKBerater newGAdvisor = new GKBerater();
         Kunde newKunde = new Kunde();
         GKunde newGKunde = new GKunde();
+        Boolean gKunde;
+        public Boolean GKunde {
+            get { return gKunde; }
+            set
+            {
 
+                gKunde = value;
+                if (GKunde)
+                {
+                    MitarbeiterListe = new ObservableCollection<Mitarbeiter>();
+                    foreach (Mitarbeiter item in BeraterUebersichtViewViewModel.ReadCSV().Where(x => x.IsGKB == true))
+                    {
+                        MitarbeiterListe.Add(item);
+                    }
+                    N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
+                    OnPropertyChanged("N_mitarbeiter");
+                }
+                else
+                {
+                    MitarbeiterListe = new ObservableCollection<Mitarbeiter>();
+                    foreach (Mitarbeiter item in BeraterUebersichtViewViewModel.ReadCSV().Where(x => x.IsGKB == false))
+                    {
+                        MitarbeiterListe.Add(item);
+                    }
+                    N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
+                    OnPropertyChanged("N_mitarbeiter");
+                }
+                OnPropertyChanged("MitarbeiterListe");
+                OnPropertyChanged("GKunde");
+            }
+        }
 
 
 
@@ -52,7 +82,13 @@ namespace BankWPF.ViewModels
         {
             AnlegenCommand = new ActionCommand(OnAnlegenExecuted, OnAnlegenCanExecute);
             KundenListe = new KundeCol();
-            MitarbeiterListe = BeraterUebersichtViewViewModel.ReadCSV();
+            MitarbeiterListe = new ObservableCollection<Mitarbeiter>();
+            foreach (Mitarbeiter item in BeraterUebersichtViewViewModel.ReadCSV().Where(x => x.IsGKB == false))
+            {
+                MitarbeiterListe.Add(item);
+            }
+            N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
+            OnPropertyChanged("N_mitarbeiter");
             KundenListe = ReadCSV(MitarbeiterListe);
             N_ergebnis = "";
             N_mitarbeiter = MitarbeiterListe.FirstOrDefault();
