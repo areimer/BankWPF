@@ -45,7 +45,7 @@
             </DataGrid>
         </Grid>
         <Grid DataContext="{StaticResource BeraterUebersichtViewViewModel}" Grid.Row="3" Grid.Column="0"  Margin="25,25,25,25" Opacity="0.9">
-            <DataGrid Name="BeraterKundenKrediteGrid" Visibility="{Binding ShowCredit}" ItemsSource="{Binding KreditListe}" SelectedItem="{Binding SelectedKredit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid Name="BeraterKundenKrediteGrid" Visibility="{Binding ShowCredit}" ItemsSource="{Binding KreditListe,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedKredit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn  Width="Auto" Header="ID" Binding="{Binding Id}"/>
                     <DataGridTextColumn  Width="Auto" Header="Betrag" Binding="{Binding Betrag}"/>
